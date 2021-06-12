@@ -1,0 +1,14 @@
+[gd_scene format=2]
+
+[node name="obstacle" type="StaticBody2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 256.0
+margin_bottom = 32.0
+color = Color( 0.462745, 0.0431373, 0.364706, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 0, 0, 0, 32, 256, 32, 256, 0 )
