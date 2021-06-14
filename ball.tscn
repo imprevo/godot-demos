@@ -1,19 +1,37 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [sub_resource type="PhysicsMaterial" id=1]
-friction = 0.96
-bounce = 0.75
+friction = 0.9
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 16.0
 
 [node name="ball" type="RigidBody2D"]
 physics_material_override = SubResource( 1 )
+gravity_scale = 4.0
 
-[node name="ColorRect" type="ColorRect" parent="."]
-margin_right = 32.0
-margin_bottom = 32.0
+[node name="ColorRect1" type="ColorRect" parent="."]
+margin_left = -12.0
+margin_top = -12.0
+margin_right = 12.0
+margin_bottom = 12.0
+rect_pivot_offset = Vector2( 12, 12 )
+color = Color( 0.25098, 0.027451, 0.419608, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_left = -12.0
+margin_top = -12.0
+margin_right = 12.0
+margin_bottom = 12.0
+rect_rotation = 45.0
+rect_pivot_offset = Vector2( 12, 12 )
 color = Color( 0.313726, 0.027451, 0.419608, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
