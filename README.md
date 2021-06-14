@@ -13,7 +13,7 @@
 
 I've learned a lot of gamedev fundamentals while working with [Phaser 3](https://github.com/imprevo/mini-games): game loop, life cycles, positioning, I/O, physics, etc. I've implemented some build-in Phaser features to better understand the engine.
 
-I realized that I should integrate different tools on my own to create advanced games. It's very interesting! But unfortunately I have a very limited time for that.  I want to focus more on programming, game mechanics and hight level tools. That's why I made a decision to switch to something else.
+I realized that I should integrate different tools on my own to create advanced games. It's very interesting! But unfortunately I have a very limited time for that.  I want to focus more on programming, game mechanics and high level tools. That's why I made a decision to switch to something else.
 
 ### So, why [Godot](https://godotengine.org/)?
 
