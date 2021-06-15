@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Background_0.png-82a1e313487f3254b4f59a1b4448e1de.stex"
+path="res://.import/Background_1.png-13859dfab2f41ee6038ecb01bd2b84ba.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://platformer/assets/Background_0.png"
-dest_files=[ "res://.import/Background_0.png-82a1e313487f3254b4f59a1b4448e1de.stex" ]
+source_file="res://platformer/assets/Final/Background_1.png"
+dest_files=[ "res://.import/Background_1.png-13859dfab2f41ee6038ecb01bd2b84ba.stex" ]
 
 [params]
 

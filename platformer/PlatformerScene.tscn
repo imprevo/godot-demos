@@ -2,9 +2,9 @@
 
 [ext_resource path="res://platformer/tilemap.tres" type="TileSet" id=1]
 [ext_resource path="res://ball.tscn" type="PackedScene" id=2]
-[ext_resource path="res://platformer/assets/Background_0.png" type="Texture" id=3]
-[ext_resource path="res://platformer/assets/Background_1.png" type="Texture" id=4]
-[ext_resource path="res://platformer/assets/Grass_background_2.png" type="Texture" id=5]
+[ext_resource path="res://platformer/assets/Final/Background_0.png" type="Texture" id=3]
+[ext_resource path="res://platformer/assets/Final/Background_1.png" type="Texture" id=4]
+[ext_resource path="res://platformer/assets/Final/Grass_background_2.png" type="Texture" id=5]
 
 [node name="PlatformerScene" type="Node2D"]
 __meta__ = {

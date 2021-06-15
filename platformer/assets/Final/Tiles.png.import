@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/brush.png-74437932863feee49a450de62d9f3ad0.stex"
+path="res://.import/Tiles.png-47a8160f96048c6cb03ae1b32031b8f7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://platformer/assets/brush.png"
-dest_files=[ "res://.import/brush.png-74437932863feee49a450de62d9f3ad0.stex" ]
+source_file="res://platformer/assets/Final/Tiles.png"
+dest_files=[ "res://.import/Tiles.png-47a8160f96048c6cb03ae1b32031b8f7.stex" ]
 
 [params]
 

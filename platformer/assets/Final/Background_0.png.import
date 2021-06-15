@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Salt.png-ed4e45777f2f85ec5707c46d0a1a3aac.stex"
+path="res://.import/Background_0.png-37d80a14c61e9f1065caf2163dec2a89.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://platformer/assets/Salt.png"
-dest_files=[ "res://.import/Salt.png-ed4e45777f2f85ec5707c46d0a1a3aac.stex" ]
+source_file="res://platformer/assets/Final/Background_0.png"
+dest_files=[ "res://.import/Background_0.png-37d80a14c61e9f1065caf2163dec2a89.stex" ]
 
 [params]
 
