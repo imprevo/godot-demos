@@ -1,4 +1,4 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=17 format=2]
+[gd_resource type="AnimationNodeStateMachine" load_steps=20 format=2]
 
 [sub_resource type="AnimationNodeAnimation" id=10]
 animation = "attack1"
@@ -15,16 +15,17 @@ animation = "hit"
 [sub_resource type="AnimationNodeAnimation" id=5]
 animation = "idle"
 
+[sub_resource type="AnimationNodeAnimation" id=26]
+animation = "jump"
+
 [sub_resource type="AnimationNodeAnimation" id=13]
 animation = "run"
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=14]
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=15]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=16]
-switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=17]
 switch_mode = 2
@@ -47,6 +48,10 @@ switch_mode = 2
 switch_mode = 2
 auto_advance = true
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=27]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=28]
+
 [resource]
 states/attack1/node = SubResource( 10 )
 states/attack1/position = Vector2( 179, 217 )
@@ -58,8 +63,10 @@ states/hit/node = SubResource( 12 )
 states/hit/position = Vector2( 626, 241 )
 states/idle/node = SubResource( 5 )
 states/idle/position = Vector2( 428, 155 )
+states/jump/node = SubResource( 26 )
+states/jump/position = Vector2( 445, 282 )
 states/run/node = SubResource( 13 )
 states/run/position = Vector2( 167, 70 )
-transitions = [ "idle", "run", SubResource( 14 ), "run", "idle", SubResource( 15 ), "idle", "attack1", SubResource( 16 ), "attack1", "idle", SubResource( 17 ), "idle", "death", SubResource( 18 ), "idle", "hit", SubResource( 19 ), "hit", "idle", SubResource( 20 ), "run", "attack1", SubResource( 21 ), "attack1", "attack2", SubResource( 24 ), "attack2", "idle", SubResource( 25 ) ]
+transitions = [ "idle", "run", SubResource( 14 ), "run", "idle", SubResource( 15 ), "idle", "attack1", SubResource( 16 ), "attack1", "idle", SubResource( 17 ), "idle", "death", SubResource( 18 ), "idle", "hit", SubResource( 19 ), "hit", "idle", SubResource( 20 ), "run", "attack1", SubResource( 21 ), "attack1", "attack2", SubResource( 24 ), "attack2", "idle", SubResource( 25 ), "jump", "idle", SubResource( 27 ), "idle", "jump", SubResource( 28 ) ]
 start_node = "idle"
 end_node = "death"

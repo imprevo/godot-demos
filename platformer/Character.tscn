@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://platformer/CharacterAnimation.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://platformer/CharacterAnimationState.tres" type="AnimationNodeStateMachine" id=2]
@@ -152,6 +152,36 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3, 4 ]
 }
 
+[sub_resource type="Animation" id=23]
+resource_name = "jump"
+length = 0.4
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "jump" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
 [sub_resource type="Animation" id=8]
 resource_name = "run"
 length = 1.6
@@ -203,6 +233,7 @@ anims/attack2 = SubResource( 22 )
 anims/death = SubResource( 9 )
 anims/hit = SubResource( 7 )
 anims/idle = SubResource( 4 )
+anims/jump = SubResource( 23 )
 anims/run = SubResource( 8 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
