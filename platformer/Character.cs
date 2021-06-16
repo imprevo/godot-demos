@@ -8,6 +8,8 @@ public class Character : KinematicBody2D
     private int _friction = 900;
     private int _gravity = 1000;
     private int _jumpForce = -500;
+    private int _jumpCount = 0;
+    private int _maxJumpCount = 2;
     private Vector2 _movement;
 
     private AnimatedSprite _animatedSprite;
@@ -26,9 +28,15 @@ public class Character : KinematicBody2D
     {
         // var currentState = _stateMachine.GetCurrentNode();
 
-        if (Input.IsActionJustPressed("ui_up") && IsOnFloor())
+        if (IsOnFloor())
+        {
+            _jumpCount = 0;
+        }
+
+        if (Input.IsActionJustPressed("ui_up") && _jumpCount < _maxJumpCount)
         {
             _movement.y = _jumpForce;
+            _jumpCount++;
         }
         else
         {
@@ -56,7 +64,6 @@ public class Character : KinematicBody2D
 
     private void RunAnimation()
     {
-        GD.Print(_movement);
 
         if (Input.IsActionJustPressed("attack"))
         {
