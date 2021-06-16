@@ -7,7 +7,7 @@ animation = "attack1"
 animation = "attack2"
 
 [sub_resource type="AnimationNodeAnimation" id=11]
-animation = "death"
+animation = "die"
 
 [sub_resource type="AnimationNodeAnimation" id=12]
 animation = "hit"
@@ -57,8 +57,8 @@ states/attack1/node = SubResource( 10 )
 states/attack1/position = Vector2( 179, 217 )
 states/attack2/node = SubResource( 23 )
 states/attack2/position = Vector2( 179, 344 )
-states/death/node = SubResource( 11 )
-states/death/position = Vector2( 636, 109 )
+states/die/node = SubResource( 11 )
+states/die/position = Vector2( 636, 109 )
 states/hit/node = SubResource( 12 )
 states/hit/position = Vector2( 626, 241 )
 states/idle/node = SubResource( 5 )
@@ -67,6 +67,6 @@ states/jump/node = SubResource( 26 )
 states/jump/position = Vector2( 445, 282 )
 states/run/node = SubResource( 13 )
 states/run/position = Vector2( 167, 70 )
-transitions = [ "idle", "run", SubResource( 14 ), "run", "idle", SubResource( 15 ), "idle", "attack1", SubResource( 16 ), "attack1", "idle", SubResource( 17 ), "idle", "death", SubResource( 18 ), "idle", "hit", SubResource( 19 ), "hit", "idle", SubResource( 20 ), "run", "attack1", SubResource( 21 ), "attack1", "attack2", SubResource( 24 ), "attack2", "idle", SubResource( 25 ), "jump", "idle", SubResource( 27 ), "idle", "jump", SubResource( 28 ) ]
+transitions = [ "idle", "run", SubResource( 14 ), "run", "idle", SubResource( 15 ), "idle", "attack1", SubResource( 16 ), "attack1", "idle", SubResource( 17 ), "idle", "die", SubResource( 18 ), "idle", "hit", SubResource( 19 ), "hit", "idle", SubResource( 20 ), "run", "attack1", SubResource( 21 ), "attack1", "attack2", SubResource( 24 ), "attack2", "idle", SubResource( 25 ), "jump", "idle", SubResource( 27 ), "idle", "jump", SubResource( 28 ) ]
 start_node = "idle"
-end_node = "death"
+end_node = "die"

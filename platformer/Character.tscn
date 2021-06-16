@@ -67,7 +67,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=9]
-resource_name = "death"
+resource_name = "die"
 step = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:animation")
@@ -79,7 +79,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ "death" ]
+"values": [ "die" ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:frame")
@@ -230,7 +230,7 @@ animation = "idle"
 root_node = NodePath("../AnimatedSprite")
 anims/attack1 = SubResource( 6 )
 anims/attack2 = SubResource( 22 )
-anims/death = SubResource( 9 )
+anims/die = SubResource( 9 )
 anims/hit = SubResource( 7 )
 anims/idle = SubResource( 4 )
 anims/jump = SubResource( 23 )

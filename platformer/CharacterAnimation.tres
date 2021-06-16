@@ -31,31 +31,6 @@ flags = 4
 atlas = ExtResource( 1 )
 region = Rect2( 0, 156, 126, 39 )
 
-[sub_resource type="AtlasTexture" id=6]
-flags = 4
-atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 126, 39 )
-
-[sub_resource type="AtlasTexture" id=7]
-flags = 4
-atlas = ExtResource( 4 )
-region = Rect2( 0, 39, 126, 39 )
-
-[sub_resource type="AtlasTexture" id=8]
-flags = 4
-atlas = ExtResource( 4 )
-region = Rect2( 0, 78, 126, 39 )
-
-[sub_resource type="AtlasTexture" id=9]
-flags = 4
-atlas = ExtResource( 4 )
-region = Rect2( 0, 117, 126, 39 )
-
-[sub_resource type="AtlasTexture" id=10]
-flags = 4
-atlas = ExtResource( 4 )
-region = Rect2( 0, 156, 126, 39 )
-
 [sub_resource type="AtlasTexture" id=19]
 flags = 4
 atlas = ExtResource( 3 )
@@ -156,16 +131,36 @@ flags = 4
 atlas = ExtResource( 2 )
 region = Rect2( 0, 117, 126, 39 )
 
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 126, 39 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 39, 126, 39 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 78, 126, 39 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 117, 126, 39 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 156, 126, 39 )
+
 [resource]
 animations = [ {
 "frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
 "loop": true,
 "name": "idle",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
-"loop": true,
-"name": "death",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 19 ), SubResource( 20 ) ],
@@ -191,5 +186,10 @@ animations = [ {
 "frames": [ SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ) ],
 "loop": true,
 "name": "attack1",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"loop": true,
+"name": "die",
 "speed": 5.0
 } ]

@@ -81,14 +81,14 @@ public class Character : KinematicBody2D
         }
     }
 
-    public void Hurt()
+    public void Hit()
     {
-        _stateMachine.Travel("hurt");
+        _stateMachine.Travel("hit");
     }
 
     public void Die()
     {
-        _stateMachine.Travel("death");
+        _stateMachine.Travel("die");
         SetPhysicsProcess(false);
     }
 }
