@@ -11,6 +11,7 @@ public class Character : KinematicBody2D
     private int _jumpCount = 0;
     private int _maxJumpCount = 2;
     private Vector2 _movement;
+    private Health _health;
 
     private AnimatedSprite _animatedSprite;
     private AnimationNodeStateMachinePlayback _stateMachine;
@@ -18,6 +19,7 @@ public class Character : KinematicBody2D
     public override void _Ready()
     {
         _movement = new Vector2();
+        _health = new Health(3);
         _animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
         var animTree = GetNode<AnimationTree>("AnimationTree");
         animTree.Active = true;
@@ -25,6 +27,15 @@ public class Character : KinematicBody2D
     }
 
     public override void _Process(float delta)
+    {
+        if (_health.value > 0)
+        {
+            Move(delta);
+            RunAnimation();
+        }
+    }
+
+    private void Move(float delta)
     {
         // var currentState = _stateMachine.GetCurrentNode();
 
@@ -58,14 +69,15 @@ public class Character : KinematicBody2D
         _movement.y = movementY;
 
         _movement = MoveAndSlide(_movement, Vector2.Up);
-        RunAnimation();
-
     }
 
     private void RunAnimation()
     {
-
-        if (Input.IsActionJustPressed("attack"))
+        if (_health.value <= 0)
+        {
+            _stateMachine.Travel("die");
+        }
+        else if (Input.IsActionJustPressed("attack"))
         {
             _stateMachine.Travel("attack1");
         }
@@ -88,14 +100,19 @@ public class Character : KinematicBody2D
         }
     }
 
-    public void Hit()
+    public void Hit(int damage)
     {
-        _stateMachine.Travel("hit");
-    }
+        _health.Hit(damage);
+        GD.Print(_health.value);
 
-    public void Die()
-    {
-        _stateMachine.Travel("die");
-        SetPhysicsProcess(false);
+        if (_health.value <= 0)
+        {
+            _stateMachine.Travel("die");
+            SetPhysicsProcess(false);
+        }
+        else
+        {
+            _stateMachine.Travel("hit");
+        }
     }
 }

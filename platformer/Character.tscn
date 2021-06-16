@@ -214,7 +214,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=3]
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="Character" type="KinematicBody2D"]
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
