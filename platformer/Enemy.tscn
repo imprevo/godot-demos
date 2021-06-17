@@ -1,0 +1,103 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://platformer/assets/NightBorne/NightBorne.png" type="Texture" id=1]
+[ext_resource path="res://platformer/Enemy.cs" type="Script" id=2]
+[ext_resource path="res://platformer/EnemyAnimationState.tres" type="AnimationNodeStateMachine" id=3]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 12.157
+height = 5.59099
+
+[sub_resource type="Animation" id=7]
+resource_name = "die"
+length = 1.6
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("NightBorne:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3, 3.2, 3.4, 3.6, 3.8, 4, 4.2, 4.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "hit"
+length = 0.8
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("NightBorne:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 70, 71, 72, 73 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+length = 1.6
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("NightBorne:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 19.3419, 27.9534 )
+
+[node name="Enemy" type="KinematicBody2D"]
+scale = Vector2( 2, 2 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
+"enemy",
+]]
+shape = SubResource( 1 )
+
+[node name="NightBorne" type="Sprite" parent="."]
+position = Vector2( 0, -11.0002 )
+texture = ExtResource( 1 )
+hframes = 23
+vframes = 5
+frame = 100
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/die = SubResource( 7 )
+anims/hit = SubResource( 10 )
+anims/idle = SubResource( 2 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = ExtResource( 3 )
+anim_player = NodePath("../AnimationPlayer")
+parameters/playback = SubResource( 5 )
+
+[node name="Hitbox" type="Area2D" parent="." groups=[
+"hitbox",
+]]
+scale = Vector2( 0.5, 0.5 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource( 6 )
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationFinished"]
+[connection signal="area_entered" from="Hitbox" to="." method="OnAttack"]

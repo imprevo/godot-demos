@@ -14,6 +14,7 @@ public class Character : KinematicBody2D
     private Health _health;
 
     private AnimatedSprite _animatedSprite;
+    private Area2D _hurtbox;
     private AnimationNodeStateMachinePlayback _stateMachine;
 
     public override void _Ready()
@@ -21,6 +22,7 @@ public class Character : KinematicBody2D
         _movement = new Vector2();
         _health = new Health(3);
         _animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
+        _hurtbox = GetNode<Area2D>("Hurtbox");
         var animTree = GetNode<AnimationTree>("AnimationTree");
         animTree.Active = true;
         _stateMachine = (AnimationNodeStateMachinePlayback)animTree.Get("parameters/playback");
@@ -96,6 +98,8 @@ public class Character : KinematicBody2D
 
         if (Math.Abs(_movement.x) > 0.001f)
         {
+            var mod = _movement.x < 0 ? -1 : 1;
+            _hurtbox.Scale = new Vector2(Math.Abs(_hurtbox.Scale.x) * mod, _hurtbox.Scale.y);
             _animatedSprite.FlipH = _movement.x < 0;
         }
     }
@@ -103,7 +107,6 @@ public class Character : KinematicBody2D
     public void Hit(int damage)
     {
         _health.Hit(damage);
-        GD.Print(_health.value);
 
         if (_health.value <= 0)
         {

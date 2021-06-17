@@ -1,0 +1,31 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=8 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "die"
+
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "hit"
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "idle"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+
+[resource]
+states/die/node = SubResource( 8 )
+states/die/position = Vector2( 353, 61 )
+states/hit/node = SubResource( 11 )
+states/hit/position = Vector2( 247, 172 )
+states/idle/node = SubResource( 3 )
+states/idle/position = Vector2( 135, 61 )
+transitions = [ "idle", "die", SubResource( 9 ), "idle", "hit", SubResource( 12 ), "hit", "idle", SubResource( 13 ), "hit", "die", SubResource( 14 ) ]
+start_node = "idle"
+end_node = "die"
