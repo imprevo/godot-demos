@@ -1,15 +1,15 @@
 using Godot;
 using System;
 
-public class Health
+public class Stats : Node
 {
-    public int maxValue;
-    public int value;
+    [Export]
+    public int health = 1;
+    public int maxHealth;
 
-    public Health(int health)
+    public override void _Ready()
     {
-        maxValue = health;
-        value = health;
+        maxHealth = health;
     }
 
     public void Hit(int damage)
@@ -18,7 +18,7 @@ public class Health
         {
             throw new Exception("Damage must be greater than 0");
         }
-        value = Math.Max(0, value - damage);
+        health = Math.Max(0, health - damage);
     }
 
     public void Heal(int health)
@@ -27,6 +27,6 @@ public class Health
         {
             throw new Exception("Health must be greater than 0");
         }
-        value = Math.Min(maxValue, value + health);
+        this.health = Math.Min(this.maxHealth, this.health + health);
     }
 }

@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://platformer/assets/NightBorne/NightBorne.png" type="Texture" id=1]
 [ext_resource path="res://platformer/Enemy.cs" type="Script" id=2]
 [ext_resource path="res://platformer/EnemyAnimationState.tres" type="AnimationNodeStateMachine" id=3]
 [ext_resource path="res://platformer/Hitbox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://platformer/Hurtbox.tscn" type="PackedScene" id=5]
+[ext_resource path="res://platformer/Stats.tscn" type="PackedScene" id=6]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 12.157
@@ -169,6 +170,9 @@ anims/idle = SubResource( 4 )
 tree_root = ExtResource( 3 )
 anim_player = NodePath("../AnimationPlayer")
 parameters/playback = SubResource( 5 )
+
+[node name="Stats" parent="." instance=ExtResource( 6 )]
+health = 3
 
 [node name="Hitbox" parent="." instance=ExtResource( 4 )]
 scale = Vector2( 1.2, 1.4 )

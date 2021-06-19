@@ -3,13 +3,13 @@ using System;
 
 public class Enemy : KinematicBody2D
 {
-    private Health _health;
+    private Stats _stats;
 
     private AnimationNodeStateMachinePlayback _stateMachine;
 
     public override void _Ready()
     {
-        _health = new Health(3);
+        _stats = GetNode<Stats>("Stats");
         var animTree = GetNode<AnimationTree>("AnimationTree");
         animTree.Active = true;
         _stateMachine = (AnimationNodeStateMachinePlayback)animTree.Get("parameters/playback");
@@ -22,9 +22,9 @@ public class Enemy : KinematicBody2D
 
     public void Hit(int damage)
     {
-        _health.Hit(damage);
+        _stats.Hit(damage);
 
-        if (_health.value <= 0)
+        if (_stats.health <= 0)
         {
             SetPhysicsProcess(false);
             _stateMachine.Travel("die");

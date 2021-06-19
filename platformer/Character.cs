@@ -11,7 +11,7 @@ public class Character : KinematicBody2D
     private int _jumpCount = 0;
     private int _maxJumpCount = 2;
     private Vector2 _movement;
-    private Health _health;
+    private Stats _stats;
 
     private AnimatedSprite _animatedSprite;
     private Area2D _hurtbox;
@@ -20,7 +20,7 @@ public class Character : KinematicBody2D
     public override void _Ready()
     {
         _movement = new Vector2();
-        _health = new Health(3);
+        _stats = GetNode<Stats>("Stats");
         _animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
         _hurtbox = GetNode<Area2D>("Hurtbox");
         var animTree = GetNode<AnimationTree>("AnimationTree");
@@ -30,7 +30,7 @@ public class Character : KinematicBody2D
 
     public override void _Process(float delta)
     {
-        if (_health.value > 0)
+        if (_stats.health > 0)
         {
             Move(delta);
             RunAnimation();
@@ -75,7 +75,7 @@ public class Character : KinematicBody2D
 
     private void RunAnimation()
     {
-        if (_health.value <= 0)
+        if (_stats.health <= 0)
         {
             _stateMachine.Travel("die");
         }
@@ -106,9 +106,9 @@ public class Character : KinematicBody2D
 
     public void Hit(int damage)
     {
-        _health.Hit(damage);
+        _stats.Hit(damage);
 
-        if (_health.value <= 0)
+        if (_stats.health <= 0)
         {
             _stateMachine.Travel("die");
             SetPhysicsProcess(false);
