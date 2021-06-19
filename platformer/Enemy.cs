@@ -24,7 +24,7 @@ public class Enemy : KinematicBody2D
     {
         _stats.Hit(damage);
 
-        if (_stats.health <= 0)
+        if (!_stats.IsAlive())
         {
             SetPhysicsProcess(false);
             _stateMachine.Travel("die");

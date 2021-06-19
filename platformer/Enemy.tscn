@@ -11,7 +11,7 @@
 radius = 12.157
 height = 5.59099
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=2]
 resource_name = "attack"
 length = 1.6
 step = 0.2
@@ -40,8 +40,7 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=2]
-resource_name = "die"
+[sub_resource type="Animation" id=3]
 length = 4.2
 step = 0.2
 tracks/0/type = "value"
@@ -94,9 +93,20 @@ tracks/3/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("HurtboxExplode/CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 2, 2.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
-[sub_resource type="Animation" id=3]
-resource_name = "hit"
+[sub_resource type="Animation" id=4]
 length = 0.8
 step = 0.2
 tracks/0/type = "value"
@@ -124,7 +134,7 @@ tracks/1/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 length = 1.6
 loop = true
 step = 0.2
@@ -141,7 +151,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
 }
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=5]
+[sub_resource type="AnimationNodeStateMachinePlayback" id=6]
 
 [node name="Enemy" type="KinematicBody2D"]
 scale = Vector2( 2, 2 )
@@ -158,21 +168,21 @@ position = Vector2( 0, -11.0002 )
 texture = ExtResource( 1 )
 hframes = 23
 vframes = 5
-frame = 57
+frame = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/attack = SubResource( 6 )
-anims/die = SubResource( 2 )
-anims/hit = SubResource( 3 )
-anims/idle = SubResource( 4 )
+anims/attack = SubResource( 2 )
+anims/die = SubResource( 3 )
+anims/hit = SubResource( 4 )
+anims/idle = SubResource( 5 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = ExtResource( 3 )
 anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 5 )
+parameters/playback = SubResource( 6 )
 
 [node name="Stats" parent="." instance=ExtResource( 6 )]
-health = 3
+HP = 3
 
 [node name="Hitbox" parent="." instance=ExtResource( 4 )]
 scale = Vector2( 1.2, 1.4 )
@@ -183,8 +193,16 @@ position = Vector2( 24.5197, 0.0654755 )
 [node name="CollisionShape2D" parent="Hurtbox" index="0"]
 disabled = true
 
+[node name="HurtboxExplode" parent="." instance=ExtResource( 5 )]
+scale = Vector2( 3, 3 )
+damage = 2
+
+[node name="CollisionShape2D" parent="HurtboxExplode" index="0"]
+disabled = true
+
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationFinished"]
 [connection signal="HitSignal" from="Hitbox" to="." method="OnHitboxHit"]
 
 [editable path="Hitbox"]
 [editable path="Hurtbox"]
+[editable path="HurtboxExplode"]

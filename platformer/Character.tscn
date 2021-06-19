@@ -277,6 +277,7 @@ tracks/1/keys = {
 [sub_resource type="AnimationNodeStateMachinePlayback" id=9]
 
 [node name="Character" type="KinematicBody2D"]
+collision_mask = 33
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -305,9 +306,11 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/playback = SubResource( 9 )
 
 [node name="Stats" parent="." instance=ExtResource( 5 )]
+HP = 3
 
 [node name="Hitbox" parent="." instance=ExtResource( 4 )]
 scale = Vector2( 1.7, 2 )
+collision_mask = 32
 
 [node name="Hurtbox" parent="." instance=ExtResource( 3 )]
 position = Vector2( 62.5543, 7.86612 )
@@ -317,6 +320,7 @@ scale = Vector2( 4, 1.2 )
 disabled = true
 
 [connection signal="HitSignal" from="Hitbox" to="." method="OnHitboxHit"]
+[connection signal="area_entered" from="Hitbox" to="." method="OnHitboxAreaEntered"]
 
 [editable path="Hitbox"]
 [editable path="Hurtbox"]

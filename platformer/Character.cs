@@ -30,7 +30,7 @@ public class Character : KinematicBody2D
 
     public override void _Process(float delta)
     {
-        if (_stats.health > 0)
+        if (_stats.HP > 0)
         {
             Move(delta);
             RunAnimation();
@@ -75,7 +75,7 @@ public class Character : KinematicBody2D
 
     private void RunAnimation()
     {
-        if (_stats.health <= 0)
+        if (!_stats.IsAlive())
         {
             _stateMachine.Travel("die");
         }
@@ -108,7 +108,7 @@ public class Character : KinematicBody2D
     {
         _stats.Hit(damage);
 
-        if (_stats.health <= 0)
+        if (!_stats.IsAlive())
         {
             _stateMachine.Travel("die");
             SetPhysicsProcess(false);
@@ -119,8 +119,27 @@ public class Character : KinematicBody2D
         }
     }
 
+    public void Heal(int hp)
+    {
+        _stats.Heal(hp);
+    }
+
     private void OnHitboxHit(int damage)
     {
         Hit(damage);
     }
+
+    private void OnHitboxAreaEntered(object area)
+    {
+        if (area is Potion)
+        {
+            if (!_stats.IsMaxHP())
+            {
+                var potion = (Potion)area;
+                potion.Use(this);
+            }
+        }
+    }
 }
+
+

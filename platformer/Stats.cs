@@ -3,13 +3,24 @@ using System;
 
 public class Stats : Node
 {
+    // TODO: rename to hp
     [Export]
-    public int health = 1;
-    public int maxHealth;
+    public int HP = 1;
+    public int maxHP;
 
     public override void _Ready()
     {
-        maxHealth = health;
+        maxHP = HP;
+    }
+
+    public bool IsAlive()
+    {
+        return HP > 0;
+    }
+
+    public bool IsMaxHP()
+    {
+        return HP == maxHP;
     }
 
     public void Hit(int damage)
@@ -18,7 +29,7 @@ public class Stats : Node
         {
             throw new Exception("Damage must be greater than 0");
         }
-        health = Math.Max(0, health - damage);
+        HP = Math.Max(0, HP - damage);
     }
 
     public void Heal(int health)
@@ -27,6 +38,6 @@ public class Stats : Node
         {
             throw new Exception("Health must be greater than 0");
         }
-        this.health = Math.Min(this.maxHealth, this.health + health);
+        this.HP = Math.Min(this.maxHP, this.HP + health);
     }
 }
