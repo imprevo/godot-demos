@@ -99,7 +99,7 @@ public class Character : KinematicBody2D
         if (Math.Abs(_movement.x) > 0.001f)
         {
             var mod = _movement.x < 0 ? -1 : 1;
-            _hurtbox.Scale = new Vector2(Math.Abs(_hurtbox.Scale.x) * mod, _hurtbox.Scale.y);
+            _hurtbox.Position = new Vector2(Math.Abs(_hurtbox.Position.x) * mod, _hurtbox.Position.y);
             _animatedSprite.FlipH = _movement.x < 0;
         }
     }
@@ -117,5 +117,10 @@ public class Character : KinematicBody2D
         {
             _stateMachine.Travel("hit");
         }
+    }
+
+    private void OnHitboxHit(int damage)
+    {
+        Hit(damage);
     }
 }

@@ -15,6 +15,11 @@ public class Enemy : KinematicBody2D
         _stateMachine = (AnimationNodeStateMachinePlayback)animTree.Get("parameters/playback");
     }
 
+    public override void _Process(float delta)
+    {
+        // _stateMachine.Travel("attack");
+    }
+
     public void Hit(int damage)
     {
         _health.Hit(damage);
@@ -30,11 +35,8 @@ public class Enemy : KinematicBody2D
         }
     }
 
-    private void OnAttack(Area2D area)
+    private void OnHitboxHit(int damage)
     {
-        if (area.IsInGroup("hurtbox"))
-        {
-            Hit(1);
-        }
+        Hit(damage);
     }
 }

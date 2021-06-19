@@ -1,14 +1,16 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://platformer/CharacterAnimation.tres" type="SpriteFrames" id=1]
 [ext_resource path="res://platformer/CharacterAnimationState.tres" type="AnimationNodeStateMachine" id=2]
+[ext_resource path="res://platformer/Hurtbox.tscn" type="PackedScene" id=3]
+[ext_resource path="res://platformer/Hitbox.tscn" type="PackedScene" id=4]
 [ext_resource path="res://platformer/Character.cs" type="Script" id=6]
 
-[sub_resource type="CapsuleShape2D" id=11]
+[sub_resource type="CapsuleShape2D" id=1]
 radius = 16.0
 height = 11.0
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=2]
 resource_name = "attack1"
 length = 0.8
 step = 0.2
@@ -49,7 +51,7 @@ tracks/2/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=3]
 resource_name = "attack2"
 length = 0.8
 step = 0.2
@@ -77,8 +79,20 @@ tracks/1/keys = {
 "update": 1,
 "values": [ 0, 1, 2, 3 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Hurtbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="Animation" id=4]
 resource_name = "die"
 step = 0.2
 tracks/0/type = "value"
@@ -105,10 +119,34 @@ tracks/1/keys = {
 "update": 1,
 "values": [ 0, 1, 2, 3, 4 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("../CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("../Hitbox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=5]
 resource_name = "hit"
-length = 0.4
+length = 0.6
 step = 0.2
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:animation")
@@ -129,13 +167,25 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../Hitbox/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 0, 1 ]
+"values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=6]
 loop = true
 step = 0.2
 tracks/0/type = "value"
@@ -163,7 +213,7 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3, 4 ]
 }
 
-[sub_resource type="Animation" id=17]
+[sub_resource type="Animation" id=7]
 resource_name = "jump"
 length = 0.4
 loop = true
@@ -193,7 +243,7 @@ tracks/1/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=18]
+[sub_resource type="Animation" id=8]
 resource_name = "run"
 length = 1.6
 loop = true
@@ -223,43 +273,47 @@ tracks/1/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
 }
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=19]
-
-[sub_resource type="RectangleShape2D" id=10]
-extents = Vector2( 39.6902, 12.2969 )
+[sub_resource type="AnimationNodeStateMachinePlayback" id=9]
 
 [node name="Character" type="KinematicBody2D"]
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 11 )
+shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( -5, -5 )
 scale = Vector2( 2, 2 )
 frames = ExtResource( 1 )
 animation = "idle"
+frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../AnimatedSprite")
-anims/attack1 = SubResource( 12 )
-anims/attack2 = SubResource( 13 )
-anims/die = SubResource( 14 )
-anims/hit = SubResource( 15 )
-anims/idle = SubResource( 16 )
-anims/jump = SubResource( 17 )
-anims/run = SubResource( 18 )
+anims/attack1 = SubResource( 2 )
+anims/attack2 = SubResource( 3 )
+anims/die = SubResource( 4 )
+anims/hit = SubResource( 5 )
+anims/idle = SubResource( 6 )
+anims/jump = SubResource( 7 )
+anims/run = SubResource( 8 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = ExtResource( 2 )
 anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 19 )
+parameters/playback = SubResource( 9 )
 
-[node name="Hurtbox" type="Area2D" parent="." groups=[
-"hurtbox",
-]]
+[node name="Hitbox" parent="." instance=ExtResource( 4 )]
+scale = Vector2( 1.7, 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="Hurtbox" parent="." instance=ExtResource( 3 )]
 position = Vector2( 62.5543, 7.86612 )
-shape = SubResource( 10 )
+scale = Vector2( 4, 1.2 )
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
 disabled = true
+
+[connection signal="HitSignal" from="Hitbox" to="." method="OnHitboxHit"]
+
+[editable path="Hitbox"]
+[editable path="Hurtbox"]

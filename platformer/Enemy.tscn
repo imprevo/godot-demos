@@ -1,12 +1,43 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://platformer/assets/NightBorne/NightBorne.png" type="Texture" id=1]
 [ext_resource path="res://platformer/Enemy.cs" type="Script" id=2]
 [ext_resource path="res://platformer/EnemyAnimationState.tres" type="AnimationNodeStateMachine" id=3]
+[ext_resource path="res://platformer/Hitbox.tscn" type="PackedScene" id=4]
+[ext_resource path="res://platformer/Hurtbox.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 12.157
 height = 5.59099
+
+[sub_resource type="Animation" id=6]
+resource_name = "attack"
+length = 1.6
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("NightBorne:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 55, 56, 57 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Hurtbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "die"
@@ -79,6 +110,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 70, 71, 72, 73 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [sub_resource type="Animation" id=4]
 length = 1.6
@@ -99,11 +142,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=5]
 
-[sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 19.3419, 27.9534 )
-
 [node name="Enemy" type="KinematicBody2D"]
 scale = Vector2( 2, 2 )
+collision_layer = 5
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
@@ -116,8 +157,10 @@ position = Vector2( 0, -11.0002 )
 texture = ExtResource( 1 )
 hframes = 23
 vframes = 5
+frame = 57
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/attack = SubResource( 6 )
 anims/die = SubResource( 2 )
 anims/hit = SubResource( 3 )
 anims/idle = SubResource( 4 )
@@ -127,13 +170,17 @@ tree_root = ExtResource( 3 )
 anim_player = NodePath("../AnimationPlayer")
 parameters/playback = SubResource( 5 )
 
-[node name="Hitbox" type="Area2D" parent="." groups=[
-"hitbox",
-]]
-scale = Vector2( 0.5, 0.5 )
+[node name="Hitbox" parent="." instance=ExtResource( 4 )]
+scale = Vector2( 1.2, 1.4 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource( 6 )
+[node name="Hurtbox" parent="." instance=ExtResource( 5 )]
+position = Vector2( 24.5197, 0.0654755 )
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+disabled = true
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationFinished"]
-[connection signal="area_entered" from="Hitbox" to="." method="OnAttack"]
+[connection signal="HitSignal" from="Hitbox" to="." method="OnHitboxHit"]
+
+[editable path="Hitbox"]
+[editable path="Hurtbox"]

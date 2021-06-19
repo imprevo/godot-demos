@@ -1,4 +1,7 @@
-[gd_resource type="AnimationNodeStateMachine" load_steps=8 format=2]
+[gd_resource type="AnimationNodeStateMachine" load_steps=11 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "attack"
 
 [sub_resource type="AnimationNodeAnimation" id=1]
 animation = "die"
@@ -19,13 +22,21 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=7]
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=9]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=10]
+
 [resource]
+states/attack/node = SubResource( 8 )
+states/attack/position = Vector2( 151, 216 )
 states/die/node = SubResource( 1 )
-states/die/position = Vector2( 353, 61 )
+states/die/position = Vector2( 432, 69 )
 states/hit/node = SubResource( 2 )
-states/hit/position = Vector2( 247, 172 )
+states/hit/position = Vector2( 379, 216 )
 states/idle/node = SubResource( 3 )
-states/idle/position = Vector2( 135, 61 )
-transitions = [ "idle", "die", SubResource( 4 ), "idle", "hit", SubResource( 5 ), "hit", "idle", SubResource( 6 ), "hit", "die", SubResource( 7 ) ]
+states/idle/position = Vector2( 263, 69 )
+transitions = [ "idle", "die", SubResource( 4 ), "idle", "hit", SubResource( 5 ), "hit", "idle", SubResource( 6 ), "hit", "die", SubResource( 7 ), "attack", "idle", SubResource( 9 ), "idle", "attack", SubResource( 10 ) ]
 start_node = "idle"
 end_node = "die"
