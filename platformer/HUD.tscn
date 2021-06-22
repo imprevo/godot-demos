@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://platformer/HUD.cs" type="Script" id=1]
+[ext_resource path="res://platformer/assets/Hearts and health bar/health_bar_decoration.png" type="Texture" id=2]
+[ext_resource path="res://platformer/assets/Hearts and health bar/health_bar.png" type="Texture" id=3]
+
+[node name="HUD" type="Control"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthBar" type="Sprite" parent="."]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 2 )
+centered = false
+offset = Vector2( 10, 10 )
+
+[node name="Progress" type="TextureProgress" parent="HealthBar"]
+margin_left = 24.0
+margin_top = 10.0
+margin_right = 73.0
+margin_bottom = 27.0
+value = 100.0
+texture_progress = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}

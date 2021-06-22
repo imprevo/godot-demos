@@ -3,7 +3,9 @@ using System;
 
 public class Stats : Node
 {
-    // TODO: rename to hp
+    [Signal]
+    delegate void StatsUpdatedSignal();
+
     [Export]
     public int HP = 1;
     public int maxHP;
@@ -30,6 +32,7 @@ public class Stats : Node
             throw new Exception("Damage must be greater than 0");
         }
         HP = Math.Max(0, HP - damage);
+        EmitSignal();
     }
 
     public void Heal(int health)
@@ -39,5 +42,11 @@ public class Stats : Node
             throw new Exception("Health must be greater than 0");
         }
         this.HP = Math.Min(this.maxHP, this.HP + health);
+        EmitSignal();
+    }
+
+    public void EmitSignal()
+    {
+        EmitSignal(nameof(StatsUpdatedSignal));
     }
 }

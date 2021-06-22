@@ -3,6 +3,8 @@ using System;
 
 public class Character : KinematicBody2D
 {
+    public Stats stats;
+
     private int _acceleration = 900;
     private int _maxSpeed = 400;
     private int _friction = 900;
@@ -11,7 +13,6 @@ public class Character : KinematicBody2D
     private int _jumpCount = 0;
     private int _maxJumpCount = 2;
     private Vector2 _movement;
-    private Stats _stats;
 
     private AnimatedSprite _animatedSprite;
     private Area2D _hurtbox;
@@ -20,7 +21,7 @@ public class Character : KinematicBody2D
     public override void _Ready()
     {
         _movement = new Vector2();
-        _stats = GetNode<Stats>("Stats");
+        stats = GetNode<Stats>("Stats");
         _animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
         _hurtbox = GetNode<Area2D>("Hurtbox");
         var animTree = GetNode<AnimationTree>("AnimationTree");
@@ -30,7 +31,7 @@ public class Character : KinematicBody2D
 
     public override void _Process(float delta)
     {
-        if (_stats.HP > 0)
+        if (stats.HP > 0)
         {
             Move(delta);
             RunAnimation();
@@ -75,7 +76,7 @@ public class Character : KinematicBody2D
 
     private void RunAnimation()
     {
-        if (!_stats.IsAlive())
+        if (!stats.IsAlive())
         {
             _stateMachine.Travel("die");
         }
@@ -106,9 +107,9 @@ public class Character : KinematicBody2D
 
     public void Hit(int damage)
     {
-        _stats.Hit(damage);
+        stats.Hit(damage);
 
-        if (!_stats.IsAlive())
+        if (!stats.IsAlive())
         {
             _stateMachine.Travel("die");
             SetPhysicsProcess(false);
@@ -121,7 +122,7 @@ public class Character : KinematicBody2D
 
     public void Heal(int hp)
     {
-        _stats.Heal(hp);
+        stats.Heal(hp);
     }
 
     private void OnHitboxHit(int damage)
@@ -133,7 +134,7 @@ public class Character : KinematicBody2D
     {
         if (area is Potion)
         {
-            if (!_stats.IsMaxHP())
+            if (!stats.IsMaxHP())
             {
                 var potion = (Potion)area;
                 potion.Use(this);
