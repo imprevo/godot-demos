@@ -31,7 +31,7 @@ public class Character : KinematicBody2D
 
     public override void _Process(float delta)
     {
-        if (stats.HP > 0)
+        if (stats.IsAlive())
         {
             Move(delta);
             RunAnimation();

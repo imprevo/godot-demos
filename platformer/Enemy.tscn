@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://platformer/assets/NightBorne/NightBorne.png" type="Texture" id=1]
 [ext_resource path="res://platformer/Enemy.cs" type="Script" id=2]
@@ -151,7 +151,25 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
 }
 
-[sub_resource type="AnimationNodeStateMachinePlayback" id=6]
+[sub_resource type="Animation" id=6]
+resource_name = "run"
+length = 1.2
+loop = true
+step = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("NightBorne:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 23, 24, 25, 26, 27, 28 ]
+}
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=7]
 
 [node name="Enemy" type="KinematicBody2D"]
 scale = Vector2( 2, 2 )
@@ -168,18 +186,18 @@ position = Vector2( 0, -11.0002 )
 texture = ExtResource( 1 )
 hframes = 23
 vframes = 5
-frame = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/attack = SubResource( 2 )
 anims/die = SubResource( 3 )
 anims/hit = SubResource( 4 )
 anims/idle = SubResource( 5 )
+anims/run = SubResource( 6 )
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = ExtResource( 3 )
 anim_player = NodePath("../AnimationPlayer")
-parameters/playback = SubResource( 6 )
+parameters/playback = SubResource( 7 )
 
 [node name="Stats" parent="." instance=ExtResource( 6 )]
 HP = 3
