@@ -36,3 +36,10 @@ text = "Exit game"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label" type="Label" parent="Control"]
+margin_left = 484.428
+margin_top = 244.688
+margin_right = 540.428
+margin_bottom = 258.688
+text = "Message"

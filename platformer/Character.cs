@@ -3,6 +3,7 @@ using System;
 
 public class Character : KinematicBody2D
 {
+    public bool canMove = false;
     public Stats stats;
 
     private int _acceleration = 900;
@@ -42,23 +43,24 @@ public class Character : KinematicBody2D
     {
         // var currentState = _stateMachine.GetCurrentNode();
 
-        if (IsOnFloor())
-        {
-            _jumpCount = 0;
-        }
 
-        if (Input.IsActionJustPressed("ui_up") && _jumpCount < _maxJumpCount)
+        _movement.y += _gravity * delta;
+
+        if (canMove)
         {
-            _movement.y = _jumpForce;
-            _jumpCount++;
-        }
-        else
-        {
-            _movement.y += _gravity * delta;
+            if (IsOnFloor())
+            {
+                _jumpCount = 0;
+            }
+            if (Input.IsActionJustPressed("ui_up") && _jumpCount < _maxJumpCount)
+            {
+                _movement.y = _jumpForce;
+                _jumpCount++;
+            }
         }
 
         var movementY = _movement.y;
-        var inputX = Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left");
+        var inputX = canMove ? Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left") : 0;
 
         if (inputX == 0)
         {
@@ -68,7 +70,6 @@ public class Character : KinematicBody2D
         {
             _movement = _movement.MoveToward(new Vector2(inputX, 0) * _maxSpeed, _acceleration * delta);
         }
-
         _movement.y = movementY;
 
         _movement = MoveAndSlide(_movement, Vector2.Up);
@@ -80,7 +81,7 @@ public class Character : KinematicBody2D
         {
             _stateMachine.Travel("die");
         }
-        else if (Input.IsActionJustPressed("attack"))
+        else if (canMove && Input.IsActionJustPressed("attack"))
         {
             _stateMachine.Travel("attack1");
         }
@@ -111,6 +112,7 @@ public class Character : KinematicBody2D
 
         if (!stats.IsAlive())
         {
+            canMove = false;
             _stateMachine.Travel("die");
             SetPhysicsProcess(false);
         }

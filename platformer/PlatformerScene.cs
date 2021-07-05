@@ -3,6 +3,7 @@ using System;
 
 public class PlatformerScene : Node2D
 {
+    private bool _isGameOver = false;
     private HUD _hud;
     private Character _player;
     private Enemy _enemy;
@@ -13,6 +14,7 @@ public class PlatformerScene : Node2D
     {
         _hud = GetNode<HUD>("Camera2D/HUD");
         _player = GetNode<Character>("Character");
+        _player.canMove = true;
         _enemy = GetNode<Enemy>("Enemy");
         _enemy.setPlayer(_player);
         _camera = GetNode<Camera2D>("Camera2D");
@@ -26,6 +28,9 @@ public class PlatformerScene : Node2D
         _hud.updatePlayerStats(_player.stats);
         if (!_player.stats.IsAlive())
         {
+            _isGameOver = true;
+            var label = _menu.GetNode<Label>("Label");
+            label.Text = "You're loose!";
             _menu.Show();
         }
     }
@@ -38,5 +43,14 @@ public class PlatformerScene : Node2D
     private void OnExitButtonPressed()
     {
         GetTree().Quit();
+    }
+
+    private void OnWinTriggerEntered(object area)
+    {
+        _isGameOver = true;
+        var label = _menu.GetNode<Label>("Label");
+        label.Text = "You're win!";
+        _player.canMove = false;
+        _menu.Show();
     }
 }
