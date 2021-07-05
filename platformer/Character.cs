@@ -43,7 +43,6 @@ public class Character : KinematicBody2D
     {
         // var currentState = _stateMachine.GetCurrentNode();
 
-
         _movement.y += _gravity * delta;
 
         if (canMove)

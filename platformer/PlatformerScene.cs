@@ -20,6 +20,11 @@ public class PlatformerScene : Node2D
         _camera = GetNode<Camera2D>("Camera2D");
         _camera.setTarget(_player);
         _menu = GetNode<Control>("Menu/Control");
+        if (OS.GetName() == "HTML5")
+        {
+            var exitButton = _menu.GetNode<Button>("ExitButton");
+            exitButton.Hide();
+        }
         OnPlayerStatsUpdated();
     }
 
