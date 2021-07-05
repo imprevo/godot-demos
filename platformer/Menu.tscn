@@ -1,0 +1,38 @@
+[gd_scene format=2]
+
+[node name="Menu" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.184314, 0.152941, 0.152941, 0.501961 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RestartButton" type="Button" parent="Control"]
+margin_left = 465.049
+margin_top = 290.106
+margin_right = 561.049
+margin_bottom = 310.106
+text = "Restart game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitButton" type="Button" parent="Control"]
+margin_left = 465.049
+margin_top = 338.308
+margin_right = 539.049
+margin_bottom = 358.308
+text = "Exit game"
+__meta__ = {
+"_edit_use_anchors_": false
+}

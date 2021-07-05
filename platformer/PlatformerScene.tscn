@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://platformer/tilemap.tres" type="TileSet" id=1]
 [ext_resource path="res://platformer/Character.tscn" type="PackedScene" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://platformer/PlatformerScene.cs" type="Script" id=9]
 [ext_resource path="res://platformer/Camera2D.cs" type="Script" id=10]
 [ext_resource path="res://platformer/Hurtbox.tscn" type="PackedScene" id=11]
+[ext_resource path="res://platformer/Menu.tscn" type="PackedScene" id=12]
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=1]
 
@@ -75,9 +76,17 @@ damage = 1000
 position = Vector2( 1000, 0 )
 shape = SubResource( 2 )
 
+[node name="Menu" parent="." instance=ExtResource( 12 )]
+
+[node name="Control" parent="Menu" index="0"]
+visible = false
+
 [connection signal="StatsUpdatedSignal" from="Character/Stats" to="." method="OnPlayerStatsUpdated"]
+[connection signal="pressed" from="Menu/Control/RestartButton" to="." method="OnRestartButtonPressed"]
+[connection signal="pressed" from="Menu/Control/ExitButton" to="." method="OnExitButtonPressed"]
 
 [editable path="Character"]
 [editable path="Character/Hitbox"]
 [editable path="Character/Hurtbox"]
 [editable path="DeathTrigger"]
+[editable path="Menu"]
