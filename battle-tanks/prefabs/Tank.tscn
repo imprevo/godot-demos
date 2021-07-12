@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://battle-tanks/assets/Tanks/Tanks.png" type="Texture" id=1]
+[ext_resource path="res://battle-tanks/prefabs/Tank.cs" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 28, 34 )
+
+[node name="Tank" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="BodySprite" type="Sprite" parent="."]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 686, 112, 235, 278 )
+
+[node name="TurretSprite" type="Sprite" parent="."]
+position = Vector2( 0, 8.32445 )
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
+offset = Vector2( 0, -90 )
+region_enabled = true
+region_rect = Rect2( 1040, 70, 126, 265 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
