@@ -6,3 +6,6 @@
 
 [node name="Tank" parent="." instance=ExtResource( 1 )]
 position = Vector2( 508.542, 453.45 )
+_projectilesNodePath = NodePath("../Projectiles")
+
+[node name="Projectiles" type="Node2D" parent="."]

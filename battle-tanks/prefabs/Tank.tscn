@@ -23,5 +23,13 @@ offset = Vector2( 0, -90 )
 region_enabled = true
 region_rect = Rect2( 1040, 70, 126, 265 )
 
+[node name="ProjectileSpawnPoint" type="Position2D" parent="TurretSprite"]
+position = Vector2( 0, -250 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="timeout" from="ShootTimer" to="." method="OnShootTimeout"]
