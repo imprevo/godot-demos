@@ -7,6 +7,8 @@
 
 ### 🏠 [Homepage](https://github.com/imprevo/godot-demos)
 
+### ✨ [Demo](https://imprevo.github.io/godot-demos/)
+
 <!-- ### ✨ [Demo](TODO) -->
 
 ## Motivation
