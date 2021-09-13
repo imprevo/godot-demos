@@ -7,7 +7,6 @@ public class Snake : Node2D
 
     public void AttachBall(Ball ball)
     {
-        GD.PrintS(ball);
         ball.SetActive(true);
         ball.Follow(GetLastChild());
         SnakeUtils.MoveChild(ball, this);

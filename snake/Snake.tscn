@@ -14,8 +14,3 @@ _spriteType = 1
 position = Vector2( -61.8388, 0 )
 _targetPath = NodePath("../Ball1")
 _active = true
-
-[node name="Ball3" parent="." instance=ExtResource( 1 )]
-position = Vector2( -120.783, 0 )
-_targetPath = NodePath("../Ball2")
-_active = true
