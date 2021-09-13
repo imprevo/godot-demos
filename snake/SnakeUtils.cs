@@ -21,4 +21,10 @@ public class SnakeUtils
         var steering = (nextVelocity - velocity) / mass;
         return velocity + steering;
     }
+
+    static public void MoveChild(Node2D child, Node2D newParent)
+    {
+        child.GetParent().RemoveChild(child);
+        newParent.AddChild(child);
+    }
 }

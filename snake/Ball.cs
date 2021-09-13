@@ -1,6 +1,17 @@
 using Godot;
 using System;
 
+public enum BallSpriteType
+{
+    AQUA,
+    GREEN,
+    PINK,
+    PURPLE,
+    RED,
+    WHITE,
+    YELLOW,
+}
+
 public class Ball : KinematicBody2D
 {
     [Export] private NodePath _targetPath;
@@ -8,6 +19,8 @@ public class Ball : KinematicBody2D
     [Export] private float _slowRadius = 100;
     [Export] private float _mass = 2;
     [Export] private float _followOffset = 70;
+    [Export] private bool _active = false;
+    [Export] private BallSpriteType _spriteType;
     private AnimatedSprite _animatedSprite;
     private Node2D _target;
     private Vector2 _velocity = Vector2.Zero;
@@ -15,6 +28,7 @@ public class Ball : KinematicBody2D
     public override void _Ready()
     {
         _animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
+        _animatedSprite.Animation = _spriteType.ToString();
         _animatedSprite.Play();
         if (_targetPath != null)
         {
@@ -24,6 +38,8 @@ public class Ball : KinematicBody2D
 
     public override void _Process(float delta)
     {
+        if (!_active)
+            return;
         var targetPosition = _target == null
             ? GetGlobalMousePosition()
             : _target.GlobalPosition;
@@ -34,5 +50,21 @@ public class Ball : KinematicBody2D
         _velocity = SnakeUtils.ArriveTo(_velocity, GlobalPosition, followPosition, _maxSpeed, _slowRadius, _mass);
         _velocity = MoveAndSlide(_velocity);
         _animatedSprite.Rotation = _velocity.Angle();
+    }
+
+    public void Init()
+    {
+        // TODO: random
+        _spriteType = BallSpriteType.PINK;
+    }
+
+    public void SetActive(bool active)
+    {
+        _active = active;
+    }
+
+    public void Follow(Node2D target)
+    {
+        _target = target;
     }
 }
