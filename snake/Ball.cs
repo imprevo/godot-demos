@@ -54,8 +54,7 @@ public class Ball : KinematicBody2D
 
     public void Init()
     {
-        // TODO: random
-        _spriteType = BallSpriteType.PINK;
+        _spriteType = SnakeUtils.GetRandomEnumValue<BallSpriteType>();
     }
 
     public void SetActive(bool active)
