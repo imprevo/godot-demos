@@ -35,6 +35,6 @@ public class SnakeUtils
     static public void MoveChild(Node2D child, Node2D newParent)
     {
         child.GetParent().RemoveChild(child);
-        newParent.AddChild(child);
+        newParent.CallDeferred("add_child", child);
     }
 }

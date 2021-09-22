@@ -19,9 +19,10 @@ public class Ball : KinematicBody2D
     [Export] private float _slowRadius = 100;
     [Export] private float _mass = 2;
     [Export] private float _followOffset = 70;
-    [Export] private bool _active = false;
+    [Export] public bool _active = false;
     [Export] private BallSpriteType _spriteType;
     private AnimatedSprite _animatedSprite;
+    private CollisionShape2D _collisionShape;
     private Node2D _target;
     private Vector2 _velocity = Vector2.Zero;
 
@@ -30,6 +31,8 @@ public class Ball : KinematicBody2D
         _animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
         _animatedSprite.Animation = _spriteType.ToString();
         _animatedSprite.Play();
+        _collisionShape = GetNode<CollisionShape2D>("Trigger/CollisionShape2D");
+        SetActive(_active);
         if (_targetPath != null)
         {
             _target = GetNode<Node2D>(_targetPath);
@@ -60,6 +63,7 @@ public class Ball : KinematicBody2D
     public void SetActive(bool active)
     {
         _active = active;
+        _collisionShape.SetDeferred("disabled", active);
     }
 
     public void Follow(Node2D target)
