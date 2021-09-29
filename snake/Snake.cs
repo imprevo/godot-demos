@@ -5,10 +5,14 @@ public class Snake : Node2D
 {
     private Node2D _balls;
     private Ball _lastChild;
+    [Export] private NodePath _navigationPath;
+    private Navigation2D _navigation;
 
     public override void _Ready()
     {
         _balls = GetNode<Node2D>("balls");
+        _navigation = GetNode<Navigation2D>(_navigationPath);
+        InitBalls();
     }
 
     public void AttachBall(Ball ball)
@@ -36,6 +40,17 @@ public class Snake : Node2D
             AttachBall(ball);
             // TODO: position hotfix. find a better way
             ball.SetDeferred("global_position", ball.GlobalPosition);
+        }
+    }
+
+    private void InitBalls()
+    {
+        var count = _balls.GetChildCount();
+
+        for (int i = 0; i < count; i++)
+        {
+            var ball = (Ball)_balls.GetChild(i);
+            ball._navigation = _navigation;
         }
     }
 }

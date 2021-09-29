@@ -5,23 +5,22 @@ public class SnakeScene : Node2D
 {
     private PackedScene _ballScene = GD.Load<PackedScene>("res://snake/Ball.tscn");
     private Snake _snake;
+    private Navigation2D _navigation;
 
     public override void _Ready()
     {
         _snake = GetNode<Snake>("Snake");
-        GenerateBall(true);
-        GenerateBall(true);
+        _navigation = GetNode<Navigation2D>("Navigation2D");
         GenerateBall(false);
-    }
-
-    public override void _Process(float delta)
-    {
+        GenerateBall(false);
+        GenerateBall(false);
     }
 
     private void GenerateBall(bool isAttach)
     {
         var ball = _ballScene.Instance<Ball>();
         ball.Init();
+        ball._navigation = _navigation;
         AddChild(ball);
         if (isAttach)
         {
