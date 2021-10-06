@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://snake/Ball.tscn" type="PackedScene" id=1]
 [ext_resource path="res://snake/Snake.cs" type="Script" id=2]
+[ext_resource path="res://snake/ControllableBall.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 50.0
@@ -9,20 +9,13 @@ radius = 50.0
 [node name="Snake" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="balls" type="Node2D" parent="."]
+[node name="ControllableBall" parent="." instance=ExtResource( 3 )]
 
-[node name="Ball1" parent="balls" instance=ExtResource( 1 )]
-_active = true
-_spriteType = 1
+[node name="Area2D2" type="Area2D" parent="ControllableBall"]
 
-[node name="Area2D2" type="Area2D" parent="balls/Ball1"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="balls/Ball1/Area2D2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ControllableBall/Area2D2"]
 shape = SubResource( 1 )
 
-[node name="Ball2" parent="balls" instance=ExtResource( 1 )]
-position = Vector2( -61.8388, 0 )
-_targetPath = NodePath("../Ball1")
-_active = true
+[node name="balls" type="Node2D" parent="."]
 
-[connection signal="area_entered" from="balls/Ball1/Area2D2" to="." method="OnAreaEntered"]
+[connection signal="area_entered" from="ControllableBall/Area2D2" to="." method="OnAreaEntered"]
