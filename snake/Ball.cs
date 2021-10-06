@@ -18,13 +18,14 @@ public class Ball : KinematicBody2D
     [Export] private float _maxSpeed = 200;
     [Export] private float _slowRadius = 100;
     [Export] private float _mass = 2;
-    [Export] private float _followOffset = 50;
+    [Export] private float _followOffset = 80;
     [Export] public bool _active = false;
     [Export] private BallSpriteType _spriteType;
     private AnimatedSprite _animatedSprite;
     private CollisionShape2D _collisionShape;
     private Node2D _target;
     private Vector2 _velocity = Vector2.Zero;
+    private float _friction = 900;
     private Vector2[] _path = new Vector2[0];
     private int _pathIndex = 0;
     public Navigation2D _navigation;
@@ -51,7 +52,7 @@ public class Ball : KinematicBody2D
         if (!_active)
             return;
 
-        MoveToTarget();
+        MoveToTarget(delta);
     }
 
     public void Init()
@@ -84,28 +85,34 @@ public class Ball : KinematicBody2D
         return _navigation.GetSimplePath(GlobalPosition, _target.GlobalPosition, false);
     }
 
-    private void MoveToTarget()
+    private void MoveToTarget(float delta)
     {
         _pathLine.GlobalPosition = Vector2.Zero;
 
         if (_path.Length == 0 || _path.Length <= _pathIndex)
             return;
 
-        var nextPosition = _path[_pathIndex];
-
-        if (GlobalPosition.DistanceTo(nextPosition) < 10)
+        if (GlobalPosition.DistanceTo(_path[_pathIndex]) < 10)
         {
-            _pathIndex++;
+            if (_pathIndex < _path.Length - 1)
+            {
+                _pathIndex++;
+            }
         }
-        else
+
+        var nextPosition = _path[_pathIndex];
+        var lastPosition = _path[_path.Length - 1];
+
+        if (GlobalPosition.DistanceTo(lastPosition) > _followOffset)
         {
-            var lastPosition = _path[_path.Length - 1];
-            var followPosition = GlobalPosition.DistanceTo(lastPosition) > _followOffset
-                ? nextPosition + (nextPosition - GlobalPosition).Normalized() * _followOffset
-                : GlobalPosition;
+            var followPosition = nextPosition + (nextPosition - GlobalPosition).Normalized() * _followOffset;
             _velocity = SnakeUtils.Follow(_velocity, GlobalPosition, followPosition, _maxSpeed, _mass);
             _velocity = MoveAndSlide(_velocity);
             _animatedSprite.Rotation = _velocity.Angle();
+        }
+        else
+        {
+            _velocity = _velocity.MoveToward(Vector2.Zero, _friction * delta);
         }
     }
 

@@ -4,6 +4,7 @@
 [ext_resource path="res://snake/ControllableBall.cs" type="Script" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
+radius = 25.0
 
 [node name="ControllableBall" type="KinematicBody2D"]
 script = ExtResource( 2 )
