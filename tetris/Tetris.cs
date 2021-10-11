@@ -7,8 +7,9 @@ public class Tetris : Node2D
     const int COLORS_TOTAL = 7;
     private TileMap _tilemap;
     private Timer _timer;
-    private List<Vector2> _figure;
+    private List<Vector2> _block;
     private Vector2 _currentPoint;
+    private BlocksBuilder _blockBuilder = new BlocksBuilder();
     private Vector2 _worldsSize = new Vector2(20, 16);
     private int _cellColor = 0;
 
@@ -22,25 +23,31 @@ public class Tetris : Node2D
     private void Init()
     {
         ResetPoint();
-        CreateFigure();
+        SpawnFigure();
         ShowFigure();
         _timer.Start();
     }
 
     private void ShowFigure()
     {
-        foreach (var cell in _figure)
+        foreach (var cell in _block)
         {
-            _tilemap.SetCell((int)cell.x, (int)cell.y, _cellColor);
+            var point = _currentPoint + cell;
+            _tilemap.SetCell((int)point.x, (int)point.y, _cellColor);
         }
     }
 
     private void HideFigure()
     {
-        foreach (var cell in _figure)
+        foreach (var cell in _block)
         {
-            _tilemap.SetCell((int)cell.x, (int)cell.y, -1);
+            var point = _currentPoint + cell;
+            _tilemap.SetCell((int)point.x, (int)point.y, -1);
         }
+    }
+    private void SpawnFigure()
+    {
+        _block = _blockBuilder.GetBlock();
     }
 
     private void ResetPoint()
@@ -51,16 +58,6 @@ public class Tetris : Node2D
     private void MovePoint()
     {
         _currentPoint = _currentPoint + new Vector2(0, 1);
-    }
-
-    private void CreateFigure()
-    {
-        List<Vector2> res = new List<Vector2>(4);
-        res.Add(_currentPoint + new Vector2(-1, -1));
-        res.Add(_currentPoint + new Vector2(0, -1));
-        res.Add(_currentPoint + new Vector2(0, 0));
-        res.Add(_currentPoint + new Vector2(1, 0));
-        _figure = res;
     }
 
     private void ChangeColor()
@@ -75,13 +72,13 @@ public class Tetris : Node2D
         {
             ResetPoint();
             ChangeColor();
+            SpawnFigure();
         }
         else
         {
             HideFigure();
             MovePoint();
         }
-        CreateFigure();
         ShowFigure();
     }
 }
