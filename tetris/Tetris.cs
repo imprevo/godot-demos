@@ -10,7 +10,6 @@ public class Tetris : Node2D
     private List<Vector2> _block;
     private Vector2 _currentPoint;
     private BlocksBuilder _blockBuilder = new BlocksBuilder();
-    private Vector2 _worldsSize = new Vector2(20, 16);
     private int _cellColor = 0;
 
     public override void _Ready()
@@ -22,10 +21,24 @@ public class Tetris : Node2D
 
     private void Init()
     {
-        ResetPoint();
         SpawnFigure();
-        ShowFigure();
         _timer.Start();
+    }
+
+    public override void _Process(float delta)
+    {
+        if (Input.IsActionPressed("ui_left"))
+        {
+            MoveFigure(Vector2.Left);
+        }
+        if (Input.IsActionPressed("ui_right"))
+        {
+            MoveFigure(Vector2.Right);
+        }
+        if (Input.IsActionPressed("ui_down"))
+        {
+            TriggerTimerTimeout();
+        }
     }
 
     private void ShowFigure()
@@ -45,9 +58,39 @@ public class Tetris : Node2D
             _tilemap.SetCell((int)point.x, (int)point.y, -1);
         }
     }
+
     private void SpawnFigure()
     {
         _block = _blockBuilder.GetBlock();
+        ResetPoint();
+        ShowFigure();
+    }
+
+    private bool MoveFigure(Vector2 direction)
+    {
+        var moved = false;
+        HideFigure();
+        var nextPoint = _currentPoint + direction;
+        if (IsFigureCanBeMoved(nextPoint))
+        {
+            _currentPoint = nextPoint;
+            moved = true;
+        }
+        ShowFigure();
+        return moved;
+    }
+
+    private bool IsFigureCanBeMoved(Vector2 point)
+    {
+        foreach (var cell in _block)
+        {
+            var tilemapCell = _tilemap.GetCellv(point + cell);
+            if (tilemapCell != -1)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void ResetPoint()
@@ -57,7 +100,7 @@ public class Tetris : Node2D
 
     private void MovePoint()
     {
-        _currentPoint = _currentPoint + new Vector2(0, 1);
+        _currentPoint = _currentPoint + Vector2.Down;
     }
 
     private void ChangeColor()
@@ -66,19 +109,19 @@ public class Tetris : Node2D
         _cellColor = _cellColor % COLORS_TOTAL;
     }
 
+    private void TriggerTimerTimeout()
+    {
+        _timer.Stop();
+        OnTimerTimeout();
+        _timer.Start();
+    }
+
     private void OnTimerTimeout()
     {
-        if (_currentPoint.y > _worldsSize.y)
+        if (!MoveFigure(Vector2.Down))
         {
-            ResetPoint();
             ChangeColor();
             SpawnFigure();
         }
-        else
-        {
-            HideFigure();
-            MovePoint();
-        }
-        ShowFigure();
     }
 }
