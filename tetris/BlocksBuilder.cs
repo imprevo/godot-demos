@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class BlocksBuilder : Node2D
 {
     private RandomNumberGenerator rng = new RandomNumberGenerator();
-    private List<List<Vector2>> blocks = new List<List<Vector2>>();
+    private List<Block> blocks = new List<Block>();
 
     public BlocksBuilder()
     {
@@ -14,62 +14,73 @@ public class BlocksBuilder : Node2D
         blocks.Add(CreateBlockT());
         blocks.Add(CreateBlockI());
         blocks.Add(CreateBlockL());
+        blocks.Add(CreateBlockJ());
         blocks.Add(CreateBlockO());
     }
 
-    public List<Vector2> GetBlock()
+    public Block GetBlock()
     {
         var index = rng.RandiRange(0, blocks.Count - 1);
         return blocks[index];
     }
 
-    private List<Vector2> CreateBlockZ()
+    private Block CreateBlockZ()
     {
         List<Vector2> block = new List<Vector2>(4);
         block.Add(new Vector2(-1, -1));
         block.Add(new Vector2(0, -1));
         block.Add(new Vector2(0, 0));
         block.Add(new Vector2(1, 0));
-        return block;
+        return new Block(block);
     }
 
-    private List<Vector2> CreateBlockT()
+    private Block CreateBlockT()
     {
         List<Vector2> block = new List<Vector2>(4);
         block.Add(new Vector2(-1, -1));
         block.Add(new Vector2(0, -1));
         block.Add(new Vector2(1, -1));
         block.Add(new Vector2(0, 0));
-        return block;
+        return new Block(block);
     }
 
-    private List<Vector2> CreateBlockI()
+    private Block CreateBlockI()
     {
         List<Vector2> block = new List<Vector2>(4);
         block.Add(new Vector2(0, -3));
         block.Add(new Vector2(0, -2));
         block.Add(new Vector2(0, -1));
         block.Add(new Vector2(0, 0));
-        return block;
+        return new Block(block);
     }
 
-    private List<Vector2> CreateBlockL()
+    private Block CreateBlockL()
     {
         List<Vector2> block = new List<Vector2>(4);
         block.Add(new Vector2(0, -2));
         block.Add(new Vector2(0, -1));
         block.Add(new Vector2(0, 0));
         block.Add(new Vector2(1, 0));
-        return block;
+        return new Block(block);
     }
 
-    private List<Vector2> CreateBlockO()
+    private Block CreateBlockJ()
+    {
+        List<Vector2> block = new List<Vector2>(4);
+        block.Add(new Vector2(1, -2));
+        block.Add(new Vector2(1, -1));
+        block.Add(new Vector2(1, 0));
+        block.Add(new Vector2(0, 0));
+        return new Block(block);
+    }
+
+    private Block CreateBlockO()
     {
         List<Vector2> block = new List<Vector2>(4);
         block.Add(new Vector2(0, -1));
         block.Add(new Vector2(1, -1));
         block.Add(new Vector2(0, 0));
         block.Add(new Vector2(1, 0));
-        return block;
+        return new Block(block);
     }
 }

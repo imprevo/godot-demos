@@ -7,7 +7,7 @@ public class Tetris : Node2D
     const int COLORS_TOTAL = 7;
     private TileMap _tilemap;
     private Timer _timer;
-    private List<Vector2> _block;
+    private Block _block;
     private Vector2 _currentPoint;
     private BlocksBuilder _blockBuilder = new BlocksBuilder();
     private int _cellColor = 0;
@@ -39,11 +39,15 @@ public class Tetris : Node2D
         {
             TriggerTimerTimeout();
         }
+        if (Input.IsActionJustPressed("ui_up"))
+        {
+            RotateFigure();
+        }
     }
 
     private void ShowFigure()
     {
-        foreach (var cell in _block)
+        foreach (var cell in _block.cells)
         {
             var point = _currentPoint + cell;
             _tilemap.SetCell((int)point.x, (int)point.y, _cellColor);
@@ -52,7 +56,7 @@ public class Tetris : Node2D
 
     private void HideFigure()
     {
-        foreach (var cell in _block)
+        foreach (var cell in _block.cells)
         {
             var point = _currentPoint + cell;
             _tilemap.SetCell((int)point.x, (int)point.y, -1);
@@ -71,7 +75,7 @@ public class Tetris : Node2D
         var moved = false;
         HideFigure();
         var nextPoint = _currentPoint + direction;
-        if (IsFigureCanBeMoved(nextPoint))
+        if (IsFigureCanBeMoved(_block, nextPoint))
         {
             _currentPoint = nextPoint;
             moved = true;
@@ -80,9 +84,23 @@ public class Tetris : Node2D
         return moved;
     }
 
-    private bool IsFigureCanBeMoved(Vector2 point)
+    private bool RotateFigure()
     {
-        foreach (var cell in _block)
+        var moved = false;
+        var rotated = _block.Rotate();
+        HideFigure();
+        if (IsFigureCanBeMoved(rotated, _currentPoint))
+        {
+            _block = rotated;
+            moved = true;
+        }
+        ShowFigure();
+        return moved;
+    }
+
+    private bool IsFigureCanBeMoved(Block block, Vector2 point)
+    {
+        foreach (var cell in block.cells)
         {
             var tilemapCell = _tilemap.GetCellv(point + cell);
             if (tilemapCell != -1)
@@ -96,11 +114,6 @@ public class Tetris : Node2D
     private void ResetPoint()
     {
         _currentPoint = new Vector2(10, -1);
-    }
-
-    private void MovePoint()
-    {
-        _currentPoint = _currentPoint + Vector2.Down;
     }
 
     private void ChangeColor()
