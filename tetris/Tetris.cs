@@ -113,7 +113,7 @@ public class Tetris : Node2D
 
     private void ResetPoint()
     {
-        _currentPoint = new Vector2(10, -1);
+        _currentPoint = new Vector2(10, -2);
     }
 
     private void ChangeColor()
