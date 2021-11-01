@@ -6,34 +6,37 @@ public class Tetris : Node2D
 {
     const int COLORS_TOTAL = 7;
     private TileMap _tilemap;
-    private Timer _timer;
+    private Timer _YMovementTimer;
+    private Timer _XMovementTimer;
     private Block _block;
     private Vector2 _currentPoint;
     private BlocksBuilder _blockBuilder = new BlocksBuilder();
     private int _cellColor = 0;
+    private bool _canMove = true;
 
     public override void _Ready()
     {
         _tilemap = GetNode<TileMap>("TileMap");
-        _timer = GetNode<Timer>("Timer");
+        _YMovementTimer = GetNode<Timer>("YMovementTimer");
+        _XMovementTimer = GetNode<Timer>("XMovementTimer");
         Init();
     }
 
     private void Init()
     {
         SpawnFigure();
-        _timer.Start();
+        _YMovementTimer.Start();
     }
 
     public override void _Process(float delta)
     {
         if (Input.IsActionPressed("ui_left"))
         {
-            MoveFigure(Vector2.Left);
+            MoveFigureThrottled(Vector2.Left);
         }
         if (Input.IsActionPressed("ui_right"))
         {
-            MoveFigure(Vector2.Right);
+            MoveFigureThrottled(Vector2.Right);
         }
         if (Input.IsActionPressed("ui_down"))
         {
@@ -84,6 +87,17 @@ public class Tetris : Node2D
         return moved;
     }
 
+    private void MoveFigureThrottled(Vector2 direction)
+    {
+        if (!_canMove)
+            return;
+
+        _canMove = false;
+        _XMovementTimer.Start();
+
+        MoveFigure(direction);
+    }
+
     private bool RotateFigure()
     {
         var moved = false;
@@ -124,17 +138,22 @@ public class Tetris : Node2D
 
     private void TriggerTimerTimeout()
     {
-        _timer.Stop();
-        OnTimerTimeout();
-        _timer.Start();
+        _YMovementTimer.Stop();
+        OnYMovementTimerTimeout();
+        _YMovementTimer.Start();
     }
 
-    private void OnTimerTimeout()
+    private void OnYMovementTimerTimeout()
     {
         if (!MoveFigure(Vector2.Down))
         {
             ChangeColor();
             SpawnFigure();
         }
+    }
+
+    private void OnXMovementTimerTimeout()
+    {
+        _canMove = true;
     }
 }
