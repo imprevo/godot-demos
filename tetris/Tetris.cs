@@ -14,6 +14,11 @@ public class Tetris : Node2D
     private int _cellColor = 0;
     private bool _canMove = true;
 
+    private int xFrom = 1;
+    private int xTo = 30;
+    private int yFrom = 0;
+    private int yTo = 17;
+
     public override void _Ready()
     {
         _tilemap = GetNode<TileMap>("TileMap");
@@ -136,6 +141,44 @@ public class Tetris : Node2D
         _cellColor = _cellColor % COLORS_TOTAL;
     }
 
+    private void RemoveRows()
+    {
+        var count = 0;
+        for (int y = yTo; y >= count; y--)
+        {
+            if (IsRowCompleted(y))
+            {
+                count++;
+            }
+            else if (count != 0)
+            {
+                ShiftRow(y, count);
+            }
+        }
+    }
+
+    private bool IsRowCompleted(int y)
+    {
+        for (int x = xFrom; x <= xTo; x++)
+        {
+            var cell = _tilemap.GetCell(x, y);
+            if (cell == -1)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void ShiftRow(int y, int count)
+    {
+        for (int x = xFrom; x <= xTo; x++)
+        {
+            var cell = _tilemap.GetCell(x, y);
+            _tilemap.SetCell(x, y + count, cell);
+        }
+    }
+
     private void TriggerTimerTimeout()
     {
         _YMovementTimer.Stop();
@@ -147,6 +190,7 @@ public class Tetris : Node2D
     {
         if (!MoveFigure(Vector2.Down))
         {
+            RemoveRows();
             ChangeColor();
             SpawnFigure();
         }
