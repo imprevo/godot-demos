@@ -2,6 +2,13 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+enum TetrisState
+{
+    INIT,
+    GAME_START,
+    GAME_OVER
+}
+
 public class Tetris : Node2D
 {
     const int COLORS_TOTAL = 7;
@@ -9,14 +16,16 @@ public class Tetris : Node2D
     private Timer _YMovementTimer;
     private Timer _XMovementTimer;
     private Block _block;
+    private Vector2 _spawnPoint = new Vector2(10, -2);
     private Vector2 _currentPoint;
     private BlocksBuilder _blockBuilder = new BlocksBuilder();
     private int _cellColor = 0;
     private bool _canMove = true;
+    private TetrisState _state = TetrisState.INIT;
 
     private int xFrom = 1;
     private int xTo = 30;
-    private int yFrom = 0;
+    private int yFrom = -3;
     private int yTo = 17;
 
     public override void _Ready()
@@ -24,33 +33,50 @@ public class Tetris : Node2D
         _tilemap = GetNode<TileMap>("TileMap");
         _YMovementTimer = GetNode<Timer>("YMovementTimer");
         _XMovementTimer = GetNode<Timer>("XMovementTimer");
-        Init();
-    }
-
-    private void Init()
-    {
-        SpawnFigure();
-        _YMovementTimer.Start();
     }
 
     public override void _Process(float delta)
     {
-        if (Input.IsActionPressed("ui_left"))
+        if (_state == TetrisState.GAME_START)
         {
-            MoveFigureThrottled(Vector2.Left);
+            if (Input.IsActionPressed("ui_left"))
+            {
+                MoveFigureThrottled(Vector2.Left);
+            }
+            if (Input.IsActionPressed("ui_right"))
+            {
+                MoveFigureThrottled(Vector2.Right);
+            }
+            if (Input.IsActionPressed("ui_down"))
+            {
+                TriggerTimerTimeout();
+            }
+            if (Input.IsActionJustPressed("ui_up"))
+            {
+                RotateFigure();
+            }
         }
-        if (Input.IsActionPressed("ui_right"))
+        else
         {
-            MoveFigureThrottled(Vector2.Right);
+            if (Input.IsActionJustPressed("ui_accept"))
+            {
+                GameStart();
+            }
         }
-        if (Input.IsActionPressed("ui_down"))
-        {
-            TriggerTimerTimeout();
-        }
-        if (Input.IsActionJustPressed("ui_up"))
-        {
-            RotateFigure();
-        }
+    }
+
+    private void GameStart()
+    {
+        _state = TetrisState.GAME_START;
+        ClearGameField();
+        SpawnFigure();
+        _YMovementTimer.Start();
+    }
+
+    private void GameOver()
+    {
+        _state = TetrisState.GAME_OVER;
+        _YMovementTimer.Stop();
     }
 
     private void ShowFigure()
@@ -74,8 +100,15 @@ public class Tetris : Node2D
     private void SpawnFigure()
     {
         _block = _blockBuilder.GetBlock();
-        ResetPoint();
-        ShowFigure();
+        if (IsFigureCanBeMoved(_block, _spawnPoint))
+        {
+            ResetPoint();
+            ShowFigure();
+        }
+        else
+        {
+            GameOver();
+        }
     }
 
     private bool MoveFigure(Vector2 direction)
@@ -130,9 +163,20 @@ public class Tetris : Node2D
         return true;
     }
 
+    private void ClearGameField()
+    {
+        for (int y = yFrom; y <= yTo; y++)
+        {
+            for (int x = xFrom; x <= xTo; x++)
+            {
+                _tilemap.SetCell(x, y, -1);
+            }
+        }
+    }
+
     private void ResetPoint()
     {
-        _currentPoint = new Vector2(10, -2);
+        _currentPoint = _spawnPoint;
     }
 
     private void ChangeColor()
