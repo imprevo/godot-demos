@@ -12,7 +12,7 @@ enum TetrisState
 public class Tetris : Node2D
 {
     const int COLORS_TOTAL = 7;
-    private TileMap _tilemap;
+    private GameGrid _gameGrid;
     private Timer _YMovementTimer;
     private Timer _XMovementTimer;
     private Block _block;
@@ -23,14 +23,9 @@ public class Tetris : Node2D
     private bool _canMove = true;
     private TetrisState _state = TetrisState.INIT;
 
-    private int xFrom = 1;
-    private int xTo = 30;
-    private int yFrom = -3;
-    private int yTo = 17;
-
     public override void _Ready()
     {
-        _tilemap = GetNode<TileMap>("TileMap");
+        _gameGrid = GetNode<GameGrid>("GameGrid");
         _YMovementTimer = GetNode<Timer>("YMovementTimer");
         _XMovementTimer = GetNode<Timer>("XMovementTimer");
     }
@@ -68,7 +63,7 @@ public class Tetris : Node2D
     private void GameStart()
     {
         _state = TetrisState.GAME_START;
-        ClearGameField();
+        _gameGrid.ClearGameField();
         SpawnFigure();
         _YMovementTimer.Start();
     }
@@ -81,26 +76,18 @@ public class Tetris : Node2D
 
     private void ShowFigure()
     {
-        foreach (var cell in _block.cells)
-        {
-            var point = _currentPoint + cell;
-            _tilemap.SetCell((int)point.x, (int)point.y, _cellColor);
-        }
+        _gameGrid.ShowFigure(_block, _currentPoint, _cellColor);
     }
 
     private void HideFigure()
     {
-        foreach (var cell in _block.cells)
-        {
-            var point = _currentPoint + cell;
-            _tilemap.SetCell((int)point.x, (int)point.y, -1);
-        }
+        _gameGrid.HideFigure(_block, _currentPoint);
     }
 
     private void SpawnFigure()
     {
         _block = _blockBuilder.GetBlock();
-        if (IsFigureCanBeMoved(_block, _spawnPoint))
+        if (_gameGrid.IsFigureCanBeMoved(_block, _spawnPoint))
         {
             ResetPoint();
             ShowFigure();
@@ -116,7 +103,7 @@ public class Tetris : Node2D
         var moved = false;
         HideFigure();
         var nextPoint = _currentPoint + direction;
-        if (IsFigureCanBeMoved(_block, nextPoint))
+        if (_gameGrid.IsFigureCanBeMoved(_block, nextPoint))
         {
             _currentPoint = nextPoint;
             moved = true;
@@ -141,37 +128,13 @@ public class Tetris : Node2D
         var moved = false;
         var rotated = _block.Rotate();
         HideFigure();
-        if (IsFigureCanBeMoved(rotated, _currentPoint))
+        if (_gameGrid.IsFigureCanBeMoved(rotated, _currentPoint))
         {
             _block = rotated;
             moved = true;
         }
         ShowFigure();
         return moved;
-    }
-
-    private bool IsFigureCanBeMoved(Block block, Vector2 point)
-    {
-        foreach (var cell in block.cells)
-        {
-            var tilemapCell = _tilemap.GetCellv(point + cell);
-            if (tilemapCell != -1)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void ClearGameField()
-    {
-        for (int y = yFrom; y <= yTo; y++)
-        {
-            for (int x = xFrom; x <= xTo; x++)
-            {
-                _tilemap.SetCell(x, y, -1);
-            }
-        }
     }
 
     private void ResetPoint()
@@ -185,44 +148,6 @@ public class Tetris : Node2D
         _cellColor = _cellColor % COLORS_TOTAL;
     }
 
-    private void RemoveRows()
-    {
-        var count = 0;
-        for (int y = yTo; y >= count; y--)
-        {
-            if (IsRowCompleted(y))
-            {
-                count++;
-            }
-            else if (count != 0)
-            {
-                ShiftRow(y, count);
-            }
-        }
-    }
-
-    private bool IsRowCompleted(int y)
-    {
-        for (int x = xFrom; x <= xTo; x++)
-        {
-            var cell = _tilemap.GetCell(x, y);
-            if (cell == -1)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void ShiftRow(int y, int count)
-    {
-        for (int x = xFrom; x <= xTo; x++)
-        {
-            var cell = _tilemap.GetCell(x, y);
-            _tilemap.SetCell(x, y + count, cell);
-        }
-    }
-
     private void TriggerTimerTimeout()
     {
         _YMovementTimer.Stop();
@@ -234,7 +159,7 @@ public class Tetris : Node2D
     {
         if (!MoveFigure(Vector2.Down))
         {
-            RemoveRows();
+            _gameGrid.RemoveRows();
             ChangeColor();
             SpawnFigure();
         }
