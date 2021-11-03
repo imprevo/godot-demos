@@ -16,7 +16,7 @@ public class Tetris : Node2D
     private Timer _XMovementTimer;
     private Control _menu;
     private Block _block;
-    private Vector2 _spawnPoint = new Vector2(10, -2);
+    private Block _nextBlock;
     private Vector2 _currentPoint;
     private BlocksBuilder _blockBuilder = new BlocksBuilder();
     private bool _canMove = true;
@@ -58,6 +58,7 @@ public class Tetris : Node2D
     {
         _state = TetrisState.GAME_START;
         _gameGrid.ClearGameField();
+        _nextBlock = _blockBuilder.GetBlock();
         SpawnFigure();
         _YMovementTimer.Start();
         _menu.Hide();
@@ -82,8 +83,10 @@ public class Tetris : Node2D
 
     private void SpawnFigure()
     {
-        _block = _blockBuilder.GetBlock();
-        if (_gameGrid.IsFigureCanBeMoved(_block, _spawnPoint))
+        _block = _nextBlock;
+        _nextBlock = _blockBuilder.GetBlock();
+        _gameGrid.ShowNextFigure(_nextBlock);
+        if (_gameGrid.IsFigureCanBeMoved(_block, _gameGrid.spawnPoint))
         {
             ResetPoint();
             ShowFigure();
@@ -135,7 +138,7 @@ public class Tetris : Node2D
 
     private void ResetPoint()
     {
-        _currentPoint = _spawnPoint;
+        _currentPoint = _gameGrid.spawnPoint;
     }
 
     private void TriggerTimerTimeout()
