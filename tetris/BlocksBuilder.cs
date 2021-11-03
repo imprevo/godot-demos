@@ -11,6 +11,7 @@ public class BlocksBuilder : Node2D
     {
         rng.Randomize();
         blocks.Add(CreateBlockZ());
+        blocks.Add(CreateBlockS());
         blocks.Add(CreateBlockT());
         blocks.Add(CreateBlockI());
         blocks.Add(CreateBlockL());
@@ -31,7 +32,17 @@ public class BlocksBuilder : Node2D
         block.Add(new Vector2(0, 0));
         block.Add(new Vector2(0, 1));
         block.Add(new Vector2(1, 1));
-        return new Block(block);
+        return new Block(block, BlockColor.GreenLight);
+    }
+
+    private Block CreateBlockS()
+    {
+        List<Vector2> block = new List<Vector2>(4);
+        block.Add(new Vector2(1, 0));
+        block.Add(new Vector2(0, 0));
+        block.Add(new Vector2(0, 1));
+        block.Add(new Vector2(-1, 1));
+        return new Block(block, BlockColor.GreenDark);
     }
 
     private Block CreateBlockT()
@@ -41,7 +52,7 @@ public class BlocksBuilder : Node2D
         block.Add(new Vector2(0, 0));
         block.Add(new Vector2(1, 0));
         block.Add(new Vector2(0, 1));
-        return new Block(block);
+        return new Block(block, BlockColor.GrayLight);
     }
 
     private Block CreateBlockI()
@@ -51,7 +62,7 @@ public class BlocksBuilder : Node2D
         block.Add(new Vector2(0, -1));
         block.Add(new Vector2(0, 0));
         block.Add(new Vector2(0, 1));
-        return new Block(block);
+        return new Block(block, BlockColor.Purple);
     }
 
     private Block CreateBlockL()
@@ -61,7 +72,7 @@ public class BlocksBuilder : Node2D
         block.Add(new Vector2(0, 0));
         block.Add(new Vector2(0, 1));
         block.Add(new Vector2(1, 1));
-        return new Block(block);
+        return new Block(block, BlockColor.RedLight);
     }
 
     private Block CreateBlockJ()
@@ -71,7 +82,7 @@ public class BlocksBuilder : Node2D
         block.Add(new Vector2(0, 0));
         block.Add(new Vector2(0, 1));
         block.Add(new Vector2(-1, 1));
-        return new Block(block);
+        return new Block(block, BlockColor.RedDark);
     }
 
     private Block CreateBlockO()
@@ -81,6 +92,6 @@ public class BlocksBuilder : Node2D
         block.Add(new Vector2(1, 0));
         block.Add(new Vector2(0, 1));
         block.Add(new Vector2(1, 1));
-        return new Block(block);
+        return new Block(block, BlockColor.GrayDark);
     }
 }

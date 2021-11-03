@@ -11,7 +11,6 @@ enum TetrisState
 
 public class Tetris : Node2D
 {
-    const int COLORS_TOTAL = 7;
     private GameGrid _gameGrid;
     private Timer _YMovementTimer;
     private Timer _XMovementTimer;
@@ -19,7 +18,6 @@ public class Tetris : Node2D
     private Vector2 _spawnPoint = new Vector2(10, -2);
     private Vector2 _currentPoint;
     private BlocksBuilder _blockBuilder = new BlocksBuilder();
-    private int _cellColor = 0;
     private bool _canMove = true;
     private TetrisState _state = TetrisState.INIT;
 
@@ -76,7 +74,7 @@ public class Tetris : Node2D
 
     private void ShowFigure()
     {
-        _gameGrid.ShowFigure(_block, _currentPoint, _cellColor);
+        _gameGrid.ShowFigure(_block, _currentPoint);
     }
 
     private void HideFigure()
@@ -142,12 +140,6 @@ public class Tetris : Node2D
         _currentPoint = _spawnPoint;
     }
 
-    private void ChangeColor()
-    {
-        _cellColor++;
-        _cellColor = _cellColor % COLORS_TOTAL;
-    }
-
     private void TriggerTimerTimeout()
     {
         _YMovementTimer.Stop();
@@ -160,7 +152,6 @@ public class Tetris : Node2D
         if (!MoveFigure(Vector2.Down))
         {
             _gameGrid.RemoveRows();
-            ChangeColor();
             SpawnFigure();
         }
     }

@@ -70,12 +70,12 @@ public class GameGrid : TileMap
         return true;
     }
 
-    public void ShowFigure(Block block, Vector2 position, int cellColor)
+    public void ShowFigure(Block block, Vector2 position)
     {
         foreach (var cell in block.cells)
         {
             var point = position + cell;
-            this.SetCell((int)point.x, (int)point.y, cellColor);
+            this.SetCell((int)point.x, (int)point.y, (int)block.color);
         }
     }
 
