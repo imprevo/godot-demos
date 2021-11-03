@@ -14,6 +14,7 @@ public class Tetris : Node2D
     private GameGrid _gameGrid;
     private Timer _YMovementTimer;
     private Timer _XMovementTimer;
+    private Control _menu;
     private Block _block;
     private Vector2 _spawnPoint = new Vector2(10, -2);
     private Vector2 _currentPoint;
@@ -26,6 +27,8 @@ public class Tetris : Node2D
         _gameGrid = GetNode<GameGrid>("GameGrid");
         _YMovementTimer = GetNode<Timer>("YMovementTimer");
         _XMovementTimer = GetNode<Timer>("XMovementTimer");
+        _menu = GetNode<Control>("CanvasLayer/Menu");
+        _menu.Show();
     }
 
     public override void _Process(float delta)
@@ -49,13 +52,6 @@ public class Tetris : Node2D
                 RotateFigure();
             }
         }
-        else
-        {
-            if (Input.IsActionJustPressed("ui_accept"))
-            {
-                GameStart();
-            }
-        }
     }
 
     private void GameStart()
@@ -64,12 +60,14 @@ public class Tetris : Node2D
         _gameGrid.ClearGameField();
         SpawnFigure();
         _YMovementTimer.Start();
+        _menu.Hide();
     }
 
     private void GameOver()
     {
         _state = TetrisState.GAME_OVER;
         _YMovementTimer.Stop();
+        _menu.Show();
     }
 
     private void ShowFigure()
@@ -159,5 +157,10 @@ public class Tetris : Node2D
     private void OnXMovementTimerTimeout()
     {
         _canMove = true;
+    }
+
+    private void OnPlayButtonPressed()
+    {
+        GameStart();
     }
 }
