@@ -35,7 +35,7 @@ public class GameGrid : TileMap
         }
     }
 
-    public void RemoveRows()
+    public int RemoveRows()
     {
         var count = 0;
         for (int y = _gameFieldCoords.y2; y >= count; y--)
@@ -49,6 +49,7 @@ public class GameGrid : TileMap
                 ShiftRow(y, count);
             }
         }
+        return count;
     }
 
     public bool IsRowCompleted(int y)

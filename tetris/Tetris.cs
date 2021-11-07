@@ -12,6 +12,7 @@ enum TetrisState
 public class Tetris : Node2D
 {
     private GameGrid _gameGrid;
+    private Score _score;
     private Timer _YMovementTimer;
     private Timer _XMovementTimer;
     private Control _menu;
@@ -28,6 +29,7 @@ public class Tetris : Node2D
         _YMovementTimer = GetNode<Timer>("YMovementTimer");
         _XMovementTimer = GetNode<Timer>("XMovementTimer");
         _menu = GetNode<Control>("CanvasLayer/Menu");
+        _score = GetNode<Score>("CanvasLayer/Score");
         _menu.Show();
     }
 
@@ -141,6 +143,14 @@ public class Tetris : Node2D
         _currentPoint = _gameGrid.spawnPoint;
     }
 
+    private void UpdateScore(int rowsCount)
+    {
+        if (rowsCount > 0)
+        {
+            _score.AddScore(rowsCount * rowsCount);
+        }
+    }
+
     private void TriggerTimerTimeout()
     {
         _YMovementTimer.Stop();
@@ -155,7 +165,8 @@ public class Tetris : Node2D
 
         if (!MoveFigure(Vector2.Down))
         {
-            _gameGrid.RemoveRows();
+            var rowsCount = _gameGrid.RemoveRows();
+            UpdateScore(rowsCount);
             SpawnFigure();
         }
     }
