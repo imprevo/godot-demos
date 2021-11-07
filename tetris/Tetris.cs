@@ -144,12 +144,15 @@ public class Tetris : Node2D
     private void TriggerTimerTimeout()
     {
         _YMovementTimer.Stop();
-        OnYMovementTimerTimeout();
         _YMovementTimer.Start();
+        OnYMovementTimerTimeout();
     }
 
     private void OnYMovementTimerTimeout()
     {
+        if (_state != TetrisState.GAME_START)
+            return;
+
         if (!MoveFigure(Vector2.Down))
         {
             _gameGrid.RemoveRows();
