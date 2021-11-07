@@ -2,96 +2,99 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class BlocksBuilder : Node2D
+namespace TetrisGame
 {
-    private RandomNumberGenerator rng = new RandomNumberGenerator();
-    private List<Block> blocks = new List<Block>();
-
-    public BlocksBuilder()
+    public class BlocksBuilder : Node2D
     {
-        rng.Randomize();
-        blocks.Add(CreateBlockZ());
-        blocks.Add(CreateBlockS());
-        blocks.Add(CreateBlockT());
-        blocks.Add(CreateBlockI());
-        blocks.Add(CreateBlockL());
-        blocks.Add(CreateBlockJ());
-        blocks.Add(CreateBlockO());
-    }
+        private RandomNumberGenerator rng = new RandomNumberGenerator();
+        private List<Block> blocks = new List<Block>();
 
-    public Block GetBlock()
-    {
-        var index = rng.RandiRange(0, blocks.Count - 1);
-        return blocks[index];
-    }
+        public BlocksBuilder()
+        {
+            rng.Randomize();
+            blocks.Add(CreateBlockZ());
+            blocks.Add(CreateBlockS());
+            blocks.Add(CreateBlockT());
+            blocks.Add(CreateBlockI());
+            blocks.Add(CreateBlockL());
+            blocks.Add(CreateBlockJ());
+            blocks.Add(CreateBlockO());
+        }
 
-    private Block CreateBlockZ()
-    {
-        List<Vector2> block = new List<Vector2>(4);
-        block.Add(new Vector2(-1, 0));
-        block.Add(new Vector2(0, 0));
-        block.Add(new Vector2(0, 1));
-        block.Add(new Vector2(1, 1));
-        return new Block(block, BlockColor.GreenLight);
-    }
+        public Block GetBlock()
+        {
+            var index = rng.RandiRange(0, blocks.Count - 1);
+            return blocks[index];
+        }
 
-    private Block CreateBlockS()
-    {
-        List<Vector2> block = new List<Vector2>(4);
-        block.Add(new Vector2(1, 0));
-        block.Add(new Vector2(0, 0));
-        block.Add(new Vector2(0, 1));
-        block.Add(new Vector2(-1, 1));
-        return new Block(block, BlockColor.GreenDark);
-    }
+        private Block CreateBlockZ()
+        {
+            List<Vector2> block = new List<Vector2>(4);
+            block.Add(new Vector2(-1, 0));
+            block.Add(new Vector2(0, 0));
+            block.Add(new Vector2(0, 1));
+            block.Add(new Vector2(1, 1));
+            return new Block(block, BlockColor.GreenLight);
+        }
 
-    private Block CreateBlockT()
-    {
-        List<Vector2> block = new List<Vector2>(4);
-        block.Add(new Vector2(-1, 0));
-        block.Add(new Vector2(0, 0));
-        block.Add(new Vector2(1, 0));
-        block.Add(new Vector2(0, 1));
-        return new Block(block, BlockColor.GrayLight);
-    }
+        private Block CreateBlockS()
+        {
+            List<Vector2> block = new List<Vector2>(4);
+            block.Add(new Vector2(1, 0));
+            block.Add(new Vector2(0, 0));
+            block.Add(new Vector2(0, 1));
+            block.Add(new Vector2(-1, 1));
+            return new Block(block, BlockColor.GreenDark);
+        }
 
-    private Block CreateBlockI()
-    {
-        List<Vector2> block = new List<Vector2>(4);
-        block.Add(new Vector2(0, -2));
-        block.Add(new Vector2(0, -1));
-        block.Add(new Vector2(0, 0));
-        block.Add(new Vector2(0, 1));
-        return new Block(block, BlockColor.Purple);
-    }
+        private Block CreateBlockT()
+        {
+            List<Vector2> block = new List<Vector2>(4);
+            block.Add(new Vector2(-1, 0));
+            block.Add(new Vector2(0, 0));
+            block.Add(new Vector2(1, 0));
+            block.Add(new Vector2(0, 1));
+            return new Block(block, BlockColor.GrayLight);
+        }
 
-    private Block CreateBlockL()
-    {
-        List<Vector2> block = new List<Vector2>(4);
-        block.Add(new Vector2(0, -1));
-        block.Add(new Vector2(0, 0));
-        block.Add(new Vector2(0, 1));
-        block.Add(new Vector2(1, 1));
-        return new Block(block, BlockColor.RedLight);
-    }
+        private Block CreateBlockI()
+        {
+            List<Vector2> block = new List<Vector2>(4);
+            block.Add(new Vector2(0, -2));
+            block.Add(new Vector2(0, -1));
+            block.Add(new Vector2(0, 0));
+            block.Add(new Vector2(0, 1));
+            return new Block(block, BlockColor.Purple);
+        }
 
-    private Block CreateBlockJ()
-    {
-        List<Vector2> block = new List<Vector2>(4);
-        block.Add(new Vector2(0, -1));
-        block.Add(new Vector2(0, 0));
-        block.Add(new Vector2(0, 1));
-        block.Add(new Vector2(-1, 1));
-        return new Block(block, BlockColor.RedDark);
-    }
+        private Block CreateBlockL()
+        {
+            List<Vector2> block = new List<Vector2>(4);
+            block.Add(new Vector2(0, -1));
+            block.Add(new Vector2(0, 0));
+            block.Add(new Vector2(0, 1));
+            block.Add(new Vector2(1, 1));
+            return new Block(block, BlockColor.RedLight);
+        }
 
-    private Block CreateBlockO()
-    {
-        List<Vector2> block = new List<Vector2>(4);
-        block.Add(new Vector2(0, 0));
-        block.Add(new Vector2(1, 0));
-        block.Add(new Vector2(0, 1));
-        block.Add(new Vector2(1, 1));
-        return new Block(block, BlockColor.GrayDark);
+        private Block CreateBlockJ()
+        {
+            List<Vector2> block = new List<Vector2>(4);
+            block.Add(new Vector2(0, -1));
+            block.Add(new Vector2(0, 0));
+            block.Add(new Vector2(0, 1));
+            block.Add(new Vector2(-1, 1));
+            return new Block(block, BlockColor.RedDark);
+        }
+
+        private Block CreateBlockO()
+        {
+            List<Vector2> block = new List<Vector2>(4);
+            block.Add(new Vector2(0, 0));
+            block.Add(new Vector2(1, 0));
+            block.Add(new Vector2(0, 1));
+            block.Add(new Vector2(1, 1));
+            return new Block(block, BlockColor.GrayDark);
+        }
     }
 }

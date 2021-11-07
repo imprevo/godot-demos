@@ -2,40 +2,43 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public enum BlockColor
+namespace TetrisGame
 {
-    GreenLight,
-    GreenDark,
-    RedLight,
-    RedDark,
-    Purple,
-    GrayLight,
-    GrayDark,
-}
-
-public class Block
-{
-    public BlockColor color;
-    public List<Vector2> cells;
-
-    public Block(List<Vector2> _cells, BlockColor _color)
+    public enum BlockColor
     {
-        cells = _cells;
-        color = _color;
+        GreenLight,
+        GreenDark,
+        RedLight,
+        RedDark,
+        Purple,
+        GrayLight,
+        GrayDark,
     }
 
-    public Block Rotate()
+    public class Block
     {
-        return new Block(RotateClockwise(), color);
-    }
+        public BlockColor color;
+        public List<Vector2> cells;
 
-    private List<Vector2> RotateClockwise()
-    {
-        var rotated = new List<Vector2>();
-        foreach (var cell in cells)
+        public Block(List<Vector2> _cells, BlockColor _color)
         {
-            rotated.Add(new Vector2(cell.y, -cell.x));
+            cells = _cells;
+            color = _color;
         }
-        return rotated;
+
+        public Block Rotate()
+        {
+            return new Block(RotateClockwise(), color);
+        }
+
+        private List<Vector2> RotateClockwise()
+        {
+            var rotated = new List<Vector2>();
+            foreach (var cell in cells)
+            {
+                rotated.Add(new Vector2(cell.y, -cell.x));
+            }
+            return rotated;
+        }
     }
 }

@@ -1,26 +1,29 @@
 using Godot;
 using System;
 
-public class Score : Control
+namespace TetrisGame
 {
-    public int score = 0;
-
-    private Label _label;
-
-    public override void _Ready()
+    public class Score : Control
     {
-        _label = GetNode<Label>("Label");
-        UpdateScoreLabel();
-    }
+        public int score = 0;
 
-    public void AddScore(int value)
-    {
-        score += value;
-        UpdateScoreLabel();
-    }
+        private Label _label;
 
-    private void UpdateScoreLabel()
-    {
-        _label.Text = "Score: " + score.ToString();
+        public override void _Ready()
+        {
+            _label = GetNode<Label>("Label");
+            UpdateScoreLabel();
+        }
+
+        public void AddScore(int value)
+        {
+            score += value;
+            UpdateScoreLabel();
+        }
+
+        private void UpdateScoreLabel()
+        {
+            _label.Text = "Score: " + score.ToString();
+        }
     }
 }
