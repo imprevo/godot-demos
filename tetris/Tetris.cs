@@ -61,10 +61,11 @@ namespace TetrisGame
         private void GameStart()
         {
             _state = TetrisState.GAME_START;
+            _score.ClearScore();
             _gameGrid.ClearGameField();
             _nextBlock = _blockBuilder.GetBlock();
+            UpdateMovementSpeed();
             SpawnFigure();
-            _YMovementTimer.Start();
             _menu.Hide();
         }
 
@@ -94,6 +95,7 @@ namespace TetrisGame
             {
                 ResetPoint();
                 ShowFigure();
+                _YMovementTimer.Start();
             }
             else
             {
@@ -150,13 +152,18 @@ namespace TetrisGame
             if (rowsCount > 0)
             {
                 _score.AddScore(rowsCount * rowsCount);
+                UpdateMovementSpeed();
             }
+        }
+
+        private void UpdateMovementSpeed()
+        {
+            _YMovementTimer.WaitTime = 1 - _score.level * 0.09f;
         }
 
         private void TriggerTimerTimeout()
         {
             _YMovementTimer.Stop();
-            _YMovementTimer.Start();
             OnYMovementTimerTimeout();
         }
 
@@ -170,6 +177,10 @@ namespace TetrisGame
                 var rowsCount = _gameGrid.RemoveRows();
                 UpdateScore(rowsCount);
                 SpawnFigure();
+            }
+            else
+            {
+                _YMovementTimer.Start();
             }
         }
 

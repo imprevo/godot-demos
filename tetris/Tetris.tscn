@@ -121,7 +121,6 @@ tile_data = PoolIntArray( -131073, 6, 0, -196594, 6, 0, -65537, 6, 0, -131058, 6
 script = ExtResource( 6 )
 
 [node name="YMovementTimer" type="Timer" parent="."]
-wait_time = 0.3
 
 [node name="XMovementTimer" type="Timer" parent="."]
 wait_time = 0.1
@@ -167,12 +166,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="CanvasLayer/Score"]
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Score"]
 margin_left = 768.0
-margin_top = 96.0
-margin_right = 928.0
-margin_bottom = 127.0
+margin_top = 96.472
+margin_right = 848.0
+margin_bottom = 127.472
 text = "Score: 0"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelLabel" type="Label" parent="CanvasLayer/Score"]
+margin_left = 848.0
+margin_top = 96.472
+margin_right = 928.0
+margin_bottom = 127.472
+text = "Level: 0"
 align = 1
 valign = 1
 __meta__ = {

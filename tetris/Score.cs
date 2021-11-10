@@ -5,25 +5,39 @@ namespace TetrisGame
 {
     public class Score : Control
     {
+        const int MIN_LEVEL = 1;
+        const int MAx_LEVEL = 10;
         public int score = 0;
+        public int level = 1;
 
-        private Label _label;
+        private Label _scoreLabel;
+        private Label _levelLabel;
 
         public override void _Ready()
         {
-            _label = GetNode<Label>("Label");
-            UpdateScoreLabel();
+            _scoreLabel = GetNode<Label>("ScoreLabel");
+            _levelLabel = GetNode<Label>("LevelLabel");
+            UpdateLabels();
         }
 
         public void AddScore(int value)
         {
             score += value;
-            UpdateScoreLabel();
+            level = Mathf.Clamp(score / 8, MIN_LEVEL, MAx_LEVEL);
+            UpdateLabels();
         }
 
-        private void UpdateScoreLabel()
+        public void ClearScore()
         {
-            _label.Text = "Score: " + score.ToString();
+            score = 0;
+            level = 0;
+            UpdateLabels();
+        }
+
+        private void UpdateLabels()
+        {
+            _scoreLabel.Text = "Score: " + score.ToString();
+            _levelLabel.Text = "Level: " + level.ToString();
         }
     }
 }
