@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="first-game"
-run/main_scene="res://platformer/PlatformerScene.tscn"
+run/main_scene="res://main/Main.tscn"
 config/icon="res://icon.png"
 
 [debug]
