@@ -10,6 +10,7 @@ namespace Main
         private int _pathIndex = 0;
         private int _speed = 200;
         private Vector2[] _path = new Vector2[0];
+        private InteractiveObject _interactWith;
 
         public override void _Ready()
         {
@@ -21,6 +22,8 @@ namespace Main
             if (_path.Length < _pathIndex + 1)
             {
                 SetPhysicsProcess(false);
+                _interactWith?.Interact();
+                _interactWith = null;
             }
             else
             {
@@ -28,10 +31,11 @@ namespace Main
             }
         }
 
-        public void MoveTo(Vector2 target)
+        public void MoveTo(Vector2 target, InteractiveObject interactWith = null)
         {
             _path = GetMovePath(target);
             _pathIndex = 0;
+            _interactWith = interactWith;
             SetPhysicsProcess(true);
         }
 
