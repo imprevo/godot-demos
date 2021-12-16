@@ -14,6 +14,10 @@ config/name="first-game"
 run/main_scene="res://main/Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+SceneManager="*res://main/SceneManager.cs"
+
 [debug]
 
 settings/fps/force_fps=60

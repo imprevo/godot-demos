@@ -1,13 +1,16 @@
 using Godot;
 using System;
 
-public class InteractiveObject : CollisionShape2D
+namespace Main
 {
-    [Export]
-    public String message;
-
-    public void Interact()
+    public class InteractiveObject : CollisionShape2D
     {
-        GD.PrintS(message);
+        [Export]
+        public Scene sceneKey = Scene.UNKNOWN;
+
+        public void Interact()
+        {
+            SceneManager.manager.ChangeScene(sceneKey);
+        }
     }
 }

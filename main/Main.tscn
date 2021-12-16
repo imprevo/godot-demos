@@ -1276,16 +1276,28 @@ position = Vector2( 100, 200 )
 [node name="InteractiveObjects" type="Area2D" parent="."]
 
 [node name="Shape1" type="CollisionShape2D" parent="InteractiveObjects"]
-position = Vector2( 280, 110 )
+position = Vector2( 240.315, 89.7606 )
 shape = SubResource( 52 )
 script = ExtResource( 3 )
-message = "Hello"
+sceneKey = 2
 
 [node name="Shape2" type="CollisionShape2D" parent="InteractiveObjects"]
-position = Vector2( 450, 120 )
+position = Vector2( 538.724, 113.002 )
 shape = SubResource( 52 )
 script = ExtResource( 3 )
-message = "World!"
+sceneKey = 3
+
+[node name="Shape3" type="CollisionShape2D" parent="InteractiveObjects"]
+position = Vector2( 538.724, 313.68 )
+shape = SubResource( 52 )
+script = ExtResource( 3 )
+sceneKey = 4
+
+[node name="Shape4" type="CollisionShape2D" parent="InteractiveObjects"]
+position = Vector2( 288.208, 449.45 )
+shape = SubResource( 52 )
+script = ExtResource( 3 )
+sceneKey = 5
 
 [connection signal="input_event" from="InteractiveObjects" to="." method="OnInteractiveObjectsInputEvent"]
 [connection signal="mouse_entered" from="InteractiveObjects" to="." method="OnInteractiveObjectsMouseEntered"]
