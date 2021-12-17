@@ -1299,6 +1299,12 @@ shape = SubResource( 52 )
 script = ExtResource( 3 )
 sceneKey = 5
 
+[node name="Shape5" type="CollisionShape2D" parent="InteractiveObjects"]
+position = Vector2( 112.124, 89.7606 )
+shape = SubResource( 52 )
+script = ExtResource( 3 )
+sceneKey = 2
+
 [connection signal="input_event" from="InteractiveObjects" to="." method="OnInteractiveObjectsInputEvent"]
 [connection signal="mouse_entered" from="InteractiveObjects" to="." method="OnInteractiveObjectsMouseEntered"]
 [connection signal="mouse_exited" from="InteractiveObjects" to="." method="OnInteractiveObjectsMouseExited"]

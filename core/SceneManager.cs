@@ -8,6 +8,7 @@ namespace Core
     {
         UNKNOWN,
         MAIN,
+        HELLO_WORLD,
         PLATFORMER,
         SNAKE,
         TETRIS,
@@ -26,6 +27,7 @@ namespace Core
         private Dictionary<Scene, string> scenes = new Dictionary<Scene, string>
         {
             {Scene.MAIN, "res://main/Main.tscn"},
+            {Scene.HELLO_WORLD, "res://hello-world/Scene.tscn"},
             {Scene.PLATFORMER, "res://platformer/PlatformerScene.tscn"},
             {Scene.SNAKE, "res://snake/SnakeScene.tscn"},
             {Scene.TANKS, "res://battle-tanks/scenes/BattleTanks.tscn"},
