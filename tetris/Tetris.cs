@@ -1,6 +1,5 @@
 using Godot;
-using System;
-using System.Collections.Generic;
+using Core;
 
 namespace TetrisGame
 {
@@ -192,6 +191,11 @@ namespace TetrisGame
         private void OnPlayButtonPressed()
         {
             GameStart();
+        }
+
+        private void OnExitButtonPressed()
+        {
+            SceneManager.manager.ChangeScene(Scene.MAIN);
         }
     }
 }

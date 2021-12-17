@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using Core;
 
 public class SnakeScene : Node2D
 {
@@ -39,4 +39,8 @@ public class SnakeScene : Node2D
         );
     }
 
+    private void OnExitButtonPressed()
+    {
+        SceneManager.manager.ChangeScene(Scene.MAIN);
+    }
 }

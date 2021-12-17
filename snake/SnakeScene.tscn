@@ -220,3 +220,17 @@ tile_data = PoolIntArray( 0, 10, 0, 1, 10, 0, 2, 10, 0, 3, 10, 0, 4, 10, 0, 5, 1
 [node name="Snake" parent="." instance=ExtResource( 1 )]
 position = Vector2( 302.318, 218.77 )
 _navigationPath = NodePath("../Navigation2D")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ExitButton" type="Button" parent="CanvasLayer"]
+margin_left = 20.9244
+margin_top = 20.9244
+margin_right = 84.9244
+margin_bottom = 44.9244
+text = "EXIT"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="CanvasLayer/ExitButton" to="." method="OnExitButtonPressed"]

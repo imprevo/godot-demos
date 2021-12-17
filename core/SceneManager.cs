@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-namespace Main
+namespace Core
 {
     public enum Scene
     {

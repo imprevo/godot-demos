@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using Core;
 
 public class PlatformerScene : Node2D
 {
@@ -47,7 +47,7 @@ public class PlatformerScene : Node2D
 
     private void OnExitButtonPressed()
     {
-        GetTree().Quit();
+        SceneManager.manager.ChangeScene(Scene.MAIN);
     }
 
     private void OnWinTriggerEntered(object area)
