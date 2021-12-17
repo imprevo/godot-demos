@@ -1279,31 +1279,51 @@ position = Vector2( 100, 200 )
 position = Vector2( 240.315, 89.7606 )
 shape = SubResource( 52 )
 script = ExtResource( 3 )
+path = NodePath("../../CanvasLayer/ConfirmationDialog")
 sceneKey = 2
 
 [node name="Shape2" type="CollisionShape2D" parent="InteractiveObjects"]
 position = Vector2( 538.724, 113.002 )
 shape = SubResource( 52 )
 script = ExtResource( 3 )
+path = NodePath("../../CanvasLayer/ConfirmationDialog")
 sceneKey = 3
 
 [node name="Shape3" type="CollisionShape2D" parent="InteractiveObjects"]
 position = Vector2( 538.724, 313.68 )
 shape = SubResource( 52 )
 script = ExtResource( 3 )
+path = NodePath("../../CanvasLayer/ConfirmationDialog")
 sceneKey = 4
 
 [node name="Shape4" type="CollisionShape2D" parent="InteractiveObjects"]
 position = Vector2( 288.208, 449.45 )
 shape = SubResource( 52 )
 script = ExtResource( 3 )
+path = NodePath("../../CanvasLayer/ConfirmationDialog")
 sceneKey = 5
 
 [node name="Shape5" type="CollisionShape2D" parent="InteractiveObjects"]
 position = Vector2( 112.124, 89.7606 )
 shape = SubResource( 52 )
 script = ExtResource( 3 )
+path = NodePath("../../CanvasLayer/ConfirmationDialog")
 sceneKey = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ConfirmationDialog" type="ConfirmationDialog" parent="CanvasLayer"]
+visible = true
+margin_left = 373.99
+margin_top = 429.082
+margin_right = 573.99
+margin_bottom = 499.082
+window_title = ""
+dialog_text = "Want to change a scene?"
+dialog_hide_on_ok = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="input_event" from="InteractiveObjects" to="." method="OnInteractiveObjectsInputEvent"]
 [connection signal="mouse_entered" from="InteractiveObjects" to="." method="OnInteractiveObjectsMouseEntered"]
