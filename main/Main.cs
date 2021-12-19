@@ -5,6 +5,7 @@ namespace Main
 {
     public class Main : Node2D
     {
+        private CharacterCamera _camera;
         private Navigation2D _navigation;
         private Position2D _spawnPoint;
         private Character _character;
@@ -16,6 +17,7 @@ namespace Main
 
         public override void _Ready()
         {
+            _camera = GetNode<CharacterCamera>("Camera2D");
             _navigation = GetNode<Navigation2D>("Navigation2D");
             _spawnPoint = GetNode<Position2D>("SpawnPosition");
             _character = SpawnCharacter();
@@ -27,7 +29,6 @@ namespace Main
         {
             if (Input.IsActionJustPressed("left_mouse"))
             {
-                GD.PrintS(_interactWith);
                 if (_interactWith == null)
                 {
                     var target = GetGlobalMousePosition();
@@ -47,6 +48,7 @@ namespace Main
             character.navigation = _navigation;
             character.GlobalPosition = _spawnPoint.GlobalPosition;
             AddChild(character);
+            _camera.SetTarget(character);
             return character;
         }
 

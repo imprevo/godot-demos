@@ -1,10 +1,11 @@
-[gd_scene load_steps=61 format=2]
+[gd_scene load_steps=62 format=2]
 
 [ext_resource path="res://main/interior-tilerset.tres" type="TileSet" id=1]
 [ext_resource path="res://main/assets/Modern tiles_Free/Interiors_free/16x16/Room_Builder_free_16x16.png" type="Texture" id=2]
 [ext_resource path="res://main/InteractiveObject.cs" type="Script" id=3]
 [ext_resource path="res://main/Main.cs" type="Script" id=4]
 [ext_resource path="res://main/ActiveTileMap.cs" type="Script" id=5]
+[ext_resource path="res://main/CharacterCamera.cs" type="Script" id=6]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -571,6 +572,12 @@ extents = Vector2( 16, 16 )
 [node name="Main" type="Node2D"]
 script = ExtResource( 4 )
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 267.103, 200 )
+current = true
+zoom = Vector2( 0.5, 0.5 )
+script = ExtResource( 6 )
+
 [node name="Navigation2D" type="Navigation2D" parent="."]
 
 [node name="GroundTileMap" type="TileMap" parent="Navigation2D"]
@@ -609,7 +616,7 @@ position = Vector2( 240.5, 72 )
 shape = SubResource( 51 )
 script = ExtResource( 3 )
 path = NodePath("../../CanvasLayer/ConfirmationDialog")
-sceneKey = 2
+sceneKey = 6
 tileCell = Vector2( 14, 5 )
 
 [node name="Position2D" type="Position2D" parent="InteractiveObjects/Shape1"]
@@ -663,10 +670,10 @@ position = Vector2( 0, 20 )
 
 [node name="ConfirmationDialog" type="ConfirmationDialog" parent="CanvasLayer"]
 visible = true
-margin_left = 373.99
-margin_top = 429.082
-margin_right = 573.99
-margin_bottom = 499.082
+margin_left = 376.95
+margin_top = 126.966
+margin_right = 576.95
+margin_bottom = 196.966
 window_title = ""
 dialog_text = "Want to change a scene?"
 dialog_hide_on_ok = false
