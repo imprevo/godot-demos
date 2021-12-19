@@ -11,11 +11,17 @@ namespace Main
         [Export]
         public Scene sceneKey = Scene.UNKNOWN;
 
+        [Export]
+        public Vector2 tileCell;
+
+        public Position2D point;
+
         private ConfirmationDialog _dialog;
 
         public override void _Ready()
         {
             _dialog = GetNode<ConfirmationDialog>(path);
+            point = GetNode<Position2D>("Position2D");
         }
 
         public void Interact()

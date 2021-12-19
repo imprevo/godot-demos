@@ -45,7 +45,7 @@ namespace Main
             var velocity = (targetPosition - GlobalPosition).Normalized() * _speed;
             MoveAndSlide(velocity, Vector2.Zero);
 
-            if (targetPosition.DistanceTo(GlobalPosition) < 10)
+            if (targetPosition.DistanceTo(GlobalPosition) < 5)
             {
                 _pathIndex++;
             }
