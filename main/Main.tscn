@@ -575,7 +575,7 @@ script = ExtResource( 4 )
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 267.103, 200 )
 current = true
-zoom = Vector2( 0.5, 0.5 )
+zoom = Vector2( 0.4, 0.4 )
 script = ExtResource( 6 )
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
