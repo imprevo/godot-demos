@@ -1,31 +1,25 @@
 using Godot;
-using System;
 
 namespace Main
 {
-    enum Direction
-    {
-        LEFT,
-        RIGHT,
-        UP,
-        DOWN,
-    }
-
     public class Character : KinematicBody2D
     {
         public Navigation2D navigation;
 
         private int _pathIndex = 0;
         private int _speed = 150;
+        private int _targetThreshold = 5;
         private Vector2[] _path = new Vector2[0];
         private InteractiveObject _interactWith;
+        private AnimationTree _animationTree;
         private AnimationNodeStateMachinePlayback _animationStateMachine;
-        private AnimationPlayer _animationPlayer;
-        private Direction _direction = Direction.DOWN;
+        private Vector2 _velocity = Vector2.Down;
 
         public override void _Ready()
         {
-            _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+            _animationTree = GetNode<AnimationTree>("AnimationTree");
+            _animationStateMachine = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
+            _animationTree.Active = true;
         }
 
         public override void _PhysicsProcess(float delta)
@@ -52,11 +46,10 @@ namespace Main
         {
             var targetPosition = _path[_pathIndex];
             var velocity = (targetPosition - GlobalPosition).Normalized() * _speed;
-            MoveAndSlide(velocity, Vector2.Zero);
-            _direction = GetDirection(velocity);
+            _velocity = MoveAndSlide(velocity, Vector2.Zero);
             RunAnimation("run");
 
-            if (targetPosition.DistanceTo(GlobalPosition) < 5)
+            if (targetPosition.DistanceTo(GlobalPosition) < _targetThreshold)
             {
                 _pathIndex++;
             }
@@ -75,47 +68,11 @@ namespace Main
             return navigation.GetSimplePath(GlobalPosition, target, false);
         }
 
-        private Direction GetDirection(Vector2 velocity)
-        {
-            var angle = Mathf.Rad2Deg(velocity.Angle());
-
-            if (angle > 45 && angle <= 135)
-            {
-                return Direction.DOWN;
-            }
-
-            if (angle > -45 && angle <= 45)
-            {
-                return Direction.RIGHT;
-            }
-
-            if (angle > -135 && angle >= -45)
-            {
-                return Direction.LEFT;
-            }
-
-            return Direction.UP;
-        }
-
-        private string GetAnimationName(string name)
-        {
-            switch (_direction)
-            {
-                case Direction.LEFT:
-                    return name + "-left";
-                case Direction.RIGHT:
-                    return name + "-right";
-                case Direction.UP:
-                    return name + "-up";
-                case Direction.DOWN:
-                default:
-                    return name + "-down";
-            }
-        }
-
         private void RunAnimation(string name)
         {
-            _animationPlayer.CurrentAnimation = GetAnimationName(name);
+            _animationStateMachine.Travel(name);
+            _animationTree.Set("parameters/idle/blend_position", _velocity);
+            _animationTree.Set("parameters/run/blend_position", _velocity);
         }
     }
 }
